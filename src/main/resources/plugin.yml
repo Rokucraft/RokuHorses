@@ -1,0 +1,5 @@
+name: RokuHorses
+version: '${version}'
+main: com.rokucraft.rokuhorses.RokuHorses
+api-version: 1.19
+authors: [ Aikovdp ]
