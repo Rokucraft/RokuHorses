@@ -1,5 +1,6 @@
 plugins {
     java
+    id("xyz.jpenilla.run-paper") version "2.0.0"
 }
 
 group = "com.rokucraft"
@@ -21,6 +22,9 @@ java {
 }
 
 tasks {
+    runServer {
+        minecraftVersion("1.19.4")
+    }
     processResources {
         val props = "version" to version
         inputs.properties(props)
