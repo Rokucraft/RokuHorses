@@ -28,6 +28,7 @@ public final class RokuHorses extends JavaPlugin {
         List.of(
                 new SpawnCommand(this)
         ).forEach(cmd -> commandManager.command(cmd.build(builder)));
+        this.getServer().getPluginManager().registerEvents(new HorseListener(), this);
     }
 
     public HorseManager getHorseManager() {
