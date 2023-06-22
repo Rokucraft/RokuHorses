@@ -16,6 +16,9 @@ import java.util.UUID;
 
 public class HorseManager {
 
+    public static final double BASE_SPEED = 0.2;
+    public static final double BASE_JUMP_STRENGTH = 0.6;
+
     private final Map<UUID, Horse> loadedHorses = new HashMap<>();
     public void spawnHorse(Audience sender, Player player, Location location) {
         Horse existingHorse = loadedHorses.get(player.getUniqueId());
@@ -34,8 +37,8 @@ public class HorseManager {
             h.getInventory().setSaddle(new ItemStack(Material.SADDLE));
             h.setColor(Horse.Color.CREAMY);
             h.setStyle(Horse.Style.NONE);
-            h.setJumpStrength(0.7);
-            h.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.2);
+            h.setJumpStrength(BASE_JUMP_STRENGTH);
+            h.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(BASE_SPEED);
         });
         loadedHorses.put(player.getUniqueId(), horse);
     }
