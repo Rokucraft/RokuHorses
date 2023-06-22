@@ -39,6 +39,7 @@ public class HorseManager {
             h.setStyle(Horse.Style.NONE);
             h.setJumpStrength(BASE_JUMP_STRENGTH);
             h.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(BASE_SPEED);
+            h.getPersistentDataContainer().set(RokuHorses.OWNER_KEY, new UUIDDataType(), player.getUniqueId());
         });
         loadedHorses.put(player.getUniqueId(), horse);
     }
