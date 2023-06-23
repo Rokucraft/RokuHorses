@@ -30,6 +30,7 @@ public class HorseManager {
             existingHorse.remove();
         }
         Horse horse = location.getWorld().spawn(location, Horse.class, h -> {
+            h.setOwner(player);
             h.setPersistent(false);
             h.setRemoveWhenFarAway(true);
             h.setTamed(true);
