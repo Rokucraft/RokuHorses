@@ -1,8 +1,8 @@
 package com.rokucraft.rokuhorses.command;
 
-import cloud.commandframework.Command;
+import cloud.commandframework.CommandManager;
 import org.bukkit.command.CommandSender;
 
 public interface RokuHorsesCommand {
-    Command<CommandSender> build(Command.Builder<CommandSender> builder);
+    void init(CommandManager<CommandSender> manager);
 }

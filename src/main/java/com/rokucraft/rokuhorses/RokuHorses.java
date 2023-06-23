@@ -26,13 +26,12 @@ public final class RokuHorses extends JavaPlugin {
             this.getServer().getPluginManager().disablePlugin(this);
             return;
         }
-        final var builder = this.commandManager.commandBuilder("horse");
 
         this.horseManager = new HorseManager();
         List.of(
                 new SpawnCommand(this),
                 new WhistleCommand(this)
-        ).forEach(cmd -> commandManager.command(cmd.build(builder)));
+        ).forEach(cmd -> cmd.init(commandManager));
         this.getServer().getPluginManager().registerEvents(new HorseListener(), this);
     }
 

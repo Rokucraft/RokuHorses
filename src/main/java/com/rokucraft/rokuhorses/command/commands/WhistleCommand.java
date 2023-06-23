@@ -1,6 +1,6 @@
 package com.rokucraft.rokuhorses.command.commands;
 
-import cloud.commandframework.Command;
+import cloud.commandframework.CommandManager;
 import cloud.commandframework.context.CommandContext;
 import com.rokucraft.rokuhorses.HorseManager;
 import com.rokucraft.rokuhorses.RokuHorses;
@@ -17,12 +17,13 @@ public class WhistleCommand implements RokuHorsesCommand {
         this.horseManager = plugin.getHorseManager();
     }
 
-    public Command<CommandSender> build(Command.Builder<CommandSender> builder) {
-        return builder.literal("whistle")
+    public void init(CommandManager<CommandSender> manager) {
+        manager.command(manager.commandBuilder("horse").literal("whistle")
                 .permission("rokuhorses.command.whistle")
                 .senderType(Player.class)
                 .handler(this::execute)
-                .build();
+                .build()
+        );
     }
 
     private void execute(CommandContext<CommandSender> ctx) {
