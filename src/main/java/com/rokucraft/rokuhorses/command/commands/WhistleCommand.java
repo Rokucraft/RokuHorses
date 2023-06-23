@@ -8,18 +8,18 @@ import com.rokucraft.rokuhorses.command.RokuHorsesCommand;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-public class SpawnCommand implements RokuHorsesCommand{
+public class WhistleCommand implements RokuHorsesCommand {
     private final RokuHorses plugin;
     private final HorseManager horseManager;
 
-    public SpawnCommand(RokuHorses plugin) {
+    public WhistleCommand(RokuHorses plugin) {
         this.plugin = plugin;
         this.horseManager = plugin.getHorseManager();
     }
 
     public Command<CommandSender> build(Command.Builder<CommandSender> builder) {
-        return builder.literal("spawn")
-                .permission("rokuhorses.command.spawn")
+        return builder.literal("whistle")
+                .permission("rokuhorses.command.whistle")
                 .senderType(Player.class)
                 .handler(this::execute)
                 .build();
@@ -27,8 +27,6 @@ public class SpawnCommand implements RokuHorsesCommand{
 
     private void execute(CommandContext<CommandSender> ctx) {
         Player sender = (Player) ctx.getSender();
-        horseManager.spawnHorse(sender, sender, sender.getLocation());
+        horseManager.callHorse(sender, sender);
     }
-
-
 }

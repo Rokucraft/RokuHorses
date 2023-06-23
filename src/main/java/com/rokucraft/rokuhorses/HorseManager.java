@@ -44,4 +44,20 @@ public class HorseManager {
         });
         loadedHorses.put(player.getUniqueId(), horse);
     }
+
+    public void callHorse(Audience sender, Player player) {
+        Horse existingHorse = loadedHorses.get(player.getUniqueId());
+        if (existingHorse == null || existingHorse.getWorld() != player.getWorld()) {
+            sender.sendMessage(Component.text("This horse is out of reach", NamedTextColor.RED));
+            return;
+        }
+        if (!existingHorse.getPassengers().isEmpty()) {
+            sender.sendMessage(Component.text("This horse is currently mounted", NamedTextColor.RED));
+            return;
+        }
+        boolean success = existingHorse.getPathfinder().moveTo(player);
+        if (!success) {
+            sender.sendMessage(Component.text("This horse is out of reach", NamedTextColor.RED));
+        }
+    }
 }

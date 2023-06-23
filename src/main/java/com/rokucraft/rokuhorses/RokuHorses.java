@@ -3,6 +3,7 @@ package com.rokucraft.rokuhorses;
 import cloud.commandframework.execution.CommandExecutionCoordinator;
 import cloud.commandframework.paper.PaperCommandManager;
 import com.rokucraft.rokuhorses.command.commands.SpawnCommand;
+import com.rokucraft.rokuhorses.command.commands.WhistleCommand;
 import org.bukkit.NamespacedKey;
 import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -29,7 +30,8 @@ public final class RokuHorses extends JavaPlugin {
 
         this.horseManager = new HorseManager();
         List.of(
-                new SpawnCommand(this)
+                new SpawnCommand(this),
+                new WhistleCommand(this)
         ).forEach(cmd -> commandManager.command(cmd.build(builder)));
         this.getServer().getPluginManager().registerEvents(new HorseListener(), this);
     }
