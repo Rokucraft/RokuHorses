@@ -27,7 +27,7 @@ public final class RokuHorses extends JavaPlugin {
             return;
         }
 
-        this.horseManager = new HorseManager();
+        this.horseManager = new HorseManager(this);
         List.of(
                 new SpawnCommand(this),
                 new WhistleCommand(this)
