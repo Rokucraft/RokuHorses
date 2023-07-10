@@ -48,14 +48,12 @@ public class HorseManager {
             h.setOwner(player);
             h.setPersistent(false);
             h.setRemoveWhenFarAway(true);
-            h.setTamed(true);
             h.setInvulnerable(true);
             h.getInventory().setSaddle(new ItemStack(Material.SADDLE));
             h.setColor(Horse.Color.CREAMY);
             h.setStyle(Horse.Style.NONE);
             h.setJumpStrength(BASE_JUMP_STRENGTH);
             h.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(BASE_SPEED);
-            h.getPersistentDataContainer().set(RokuHorses.OWNER_KEY, new UUIDDataType(), player.getUniqueId());
         });
         loadedHorses.put(player.getUniqueId(), horse);
     }
