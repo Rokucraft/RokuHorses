@@ -4,7 +4,8 @@ import cloud.commandframework.execution.CommandExecutionCoordinator;
 import cloud.commandframework.paper.PaperCommandManager;
 import com.rokucraft.rokuhorses.command.commands.SpawnCommand;
 import com.rokucraft.rokuhorses.command.commands.WhistleCommand;
-import org.bukkit.NamespacedKey;
+import com.rokucraft.rokuhorses.horses.HorseManager;
+import com.rokucraft.rokuhorses.horses.db.SQLiteHorseManager;
 import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -15,8 +16,6 @@ public final class RokuHorses extends JavaPlugin {
     private PaperCommandManager<CommandSender> commandManager;
     private HorseManager horseManager;
 
-    public static final NamespacedKey OWNER_KEY = new NamespacedKey("rokuhorses", "horse-owner");
-
     @Override
     public void onEnable() {
         try {
@@ -26,8 +25,7 @@ public final class RokuHorses extends JavaPlugin {
             this.getServer().getPluginManager().disablePlugin(this);
             return;
         }
-
-        this.horseManager = new HorseManager(this);
+        this.horseManager = new SQLiteHorseManager(getDataFolder().toPath().resolve("storage.db"));
         List.of(
                 new SpawnCommand(this),
                 new WhistleCommand(this)
