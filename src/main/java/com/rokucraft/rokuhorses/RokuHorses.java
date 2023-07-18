@@ -3,6 +3,7 @@ package com.rokucraft.rokuhorses;
 import cloud.commandframework.execution.CommandExecutionCoordinator;
 import cloud.commandframework.paper.PaperCommandManager;
 import com.rokucraft.rokuhorses.command.commands.EditCommand;
+import com.rokucraft.rokuhorses.command.commands.NameCommand;
 import com.rokucraft.rokuhorses.command.commands.SpawnCommand;
 import com.rokucraft.rokuhorses.command.commands.WhistleCommand;
 import com.rokucraft.rokuhorses.horses.HorseManager;
@@ -30,7 +31,8 @@ public final class RokuHorses extends JavaPlugin {
         List.of(
                 new SpawnCommand(this),
                 new WhistleCommand(this),
-                new EditCommand(this)
+                new EditCommand(this),
+                new NameCommand(this)
         ).forEach(cmd -> cmd.init(commandManager));
         this.getServer().getPluginManager().registerEvents(new HorseListener(), this);
     }
