@@ -24,9 +24,9 @@ public final class RokuHorse {
     public static final double BASE_SPEED = 0.2;
     public static final double BASE_JUMP_STRENGTH = 0.6;
     private final UUID owner;
-    private final Component name;
-    private final Horse.Color color;
-    private final Horse.Style style;
+    private Component name;
+    private Horse.Color color;
+    private Horse.Style style;
 
     private Horse horse;
 
@@ -109,6 +109,27 @@ public final class RokuHorse {
 
     public Horse.Style style() {
         return style;
+    }
+
+    public void name(Component name) {
+        if (horse != null) {
+            horse.customName(name);
+        }
+        this.name = name;
+    }
+
+    public void color(Horse.Color color) {
+        if (horse != null) {
+            horse.setColor(color);
+        }
+        this.color = color;
+    }
+
+    public void style(Horse.Style style) {
+        if (horse != null) {
+            horse.setStyle(style);
+        }
+        this.style = style;
     }
 
     @Override
