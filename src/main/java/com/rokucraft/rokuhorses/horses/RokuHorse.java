@@ -46,6 +46,7 @@ public final class RokuHorse {
             h.setColor(color);
             h.setStyle(style);
             h.customName(name);
+            h.setCustomNameVisible(true);
             h.setPersistent(false);
             h.setRemoveWhenFarAway(true);
             h.setInvulnerable(true);
