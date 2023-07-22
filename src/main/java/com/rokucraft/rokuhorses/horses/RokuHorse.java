@@ -46,7 +46,7 @@ public final class RokuHorse {
             h.setColor(color);
             h.setStyle(style);
             h.customName(name);
-            h.setCustomNameVisible(true);
+            h.setCustomNameVisible(name != null);
             h.setPersistent(false);
             h.setRemoveWhenFarAway(true);
             h.setInvulnerable(true);
@@ -114,6 +114,7 @@ public final class RokuHorse {
     public void name(Component name) {
         if (horse != null) {
             horse.customName(name);
+            horse.setCustomNameVisible(name != null);
         }
         this.name = name;
     }

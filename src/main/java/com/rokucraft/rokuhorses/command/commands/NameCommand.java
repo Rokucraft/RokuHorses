@@ -10,6 +10,8 @@ import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import java.util.Optional;
+
 public class NameCommand implements RokuHorsesCommand {
     HorseManager horseManager;
 
@@ -23,18 +25,24 @@ public class NameCommand implements RokuHorsesCommand {
                 manager.commandBuilder("horse")
                         .literal("name")
                         .permission("rokuhorses.command.name")
-                        .argument(StringArgument.greedy("name"))
+                        .argument(StringArgument.optional("name", StringArgument.StringMode.GREEDY))
                         .senderType(Player.class)
                         .handler(ctx -> {
-                            String name = ctx.get("name");
+                            Optional<String> name = ctx.getOptional("name");
                             Player player = ((Player) ctx.getSender());
                             horseManager.horse(player.getUniqueId()).thenAccept(horse -> {
-                                horse.name(Component.text(name));
+                                horse.name(name.map(Component::text).orElse(null));
                                 horseManager.save(horse);
-                                player.sendMessage(Component.text(
-                                        "Your horse's name has been changed to " + name,
-                                        NamedTextColor.GREEN
-                                ));
+                                if (name.isPresent()) {
+                                    player.sendMessage(Component.text(
+                                            "Your horse's name has been changed to " + name.get(),
+                                            NamedTextColor.GREEN
+                                    ));
+                                } else {
+                                    player.sendMessage(Component.text(
+                                            "Your horse's name has been removed", NamedTextColor.GREEN
+                                    ));
+                                }
                             });
                         })
         );

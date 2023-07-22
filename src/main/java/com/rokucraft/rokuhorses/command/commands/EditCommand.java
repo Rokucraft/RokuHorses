@@ -12,6 +12,8 @@ import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Horse;
 
+import java.util.Optional;
+
 public class EditCommand implements RokuHorsesCommand {
 
     HorseManager horseManager;
@@ -58,13 +60,13 @@ public class EditCommand implements RokuHorsesCommand {
         manager.command(
                 root.literal("name")
                         .permission("rokuhorses.command.edit.name")
-                        .argument(StringArgument.greedy("name"))
+                        .argument(StringArgument.optional("name", StringArgument.StringMode.GREEDY))
                         .handler(ctx -> {
                             OfflinePlayer player = ctx.get("player");
-                            String name = ctx.get("name");
+                            Optional<String> name = ctx.getOptional("name");
                             horseManager.horse(player.getUniqueId()).thenAccept(
                                     horse -> {
-                                        horse.name(Component.text(name));
+                                        horse.name(name.map(Component::text).orElse(null));
                                         horseManager.save(horse);
                                     }
                             );
