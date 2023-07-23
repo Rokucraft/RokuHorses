@@ -1,4 +1,4 @@
-package com.rokucraft.rokuhorses;
+package com.rokucraft.rokuhorses.listeners;
 
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;

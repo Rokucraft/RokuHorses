@@ -8,6 +8,7 @@ import com.rokucraft.rokuhorses.command.commands.SpawnCommand;
 import com.rokucraft.rokuhorses.command.commands.WhistleCommand;
 import com.rokucraft.rokuhorses.horses.HorseManager;
 import com.rokucraft.rokuhorses.horses.db.SQLiteHorseManager;
+import com.rokucraft.rokuhorses.listeners.HorseListener;
 import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.java.JavaPlugin;
 
