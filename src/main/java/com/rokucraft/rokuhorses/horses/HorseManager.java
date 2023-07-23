@@ -36,6 +36,11 @@ public abstract class HorseManager implements Listener {
         return CompletableFuture.runAsync(() -> createSync(horse));
     }
 
+    public CompletableFuture<Void> unload(UUID uuid) {
+        cache.remove(uuid);
+        return CompletableFuture.completedFuture(null);
+    }
+
     protected abstract Optional<RokuHorse> fetch(UUID uuid);
 
     protected abstract void saveSync(RokuHorse horse);

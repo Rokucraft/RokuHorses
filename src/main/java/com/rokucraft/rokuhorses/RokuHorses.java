@@ -9,6 +9,7 @@ import com.rokucraft.rokuhorses.command.commands.WhistleCommand;
 import com.rokucraft.rokuhorses.horses.HorseManager;
 import com.rokucraft.rokuhorses.horses.db.SQLiteHorseManager;
 import com.rokucraft.rokuhorses.listeners.HorseListener;
+import com.rokucraft.rokuhorses.listeners.PlayerJoinListener;
 import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -36,6 +37,7 @@ public final class RokuHorses extends JavaPlugin {
                 new NameCommand(this)
         ).forEach(cmd -> cmd.init(commandManager));
         this.getServer().getPluginManager().registerEvents(new HorseListener(), this);
+        this.getServer().getPluginManager().registerEvents(new PlayerJoinListener(horseManager), this);
     }
 
     public HorseManager getHorseManager() {
