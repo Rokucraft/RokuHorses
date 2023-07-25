@@ -1,7 +1,6 @@
 package com.rokucraft.rokuhorses.horses;
 
 import org.bukkit.entity.Horse;
-import org.bukkit.event.Listener;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -9,7 +8,7 @@ import java.util.Optional;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 
-public abstract class HorseManager implements Listener {
+public abstract class HorseManager {
 
     private final Map<UUID, CompletableFuture<RokuHorse>> cache = new HashMap<>();
 
