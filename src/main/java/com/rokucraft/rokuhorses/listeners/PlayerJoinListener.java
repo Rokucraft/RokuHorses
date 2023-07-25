@@ -1,6 +1,7 @@
 package com.rokucraft.rokuhorses.listeners;
 
 import com.rokucraft.rokuhorses.horses.HorseManager;
+import com.rokucraft.rokuhorses.horses.RokuHorse;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
@@ -20,6 +21,10 @@ public class PlayerJoinListener implements Listener {
 
     @EventHandler
     public void onLeave(PlayerQuitEvent e) {
+        RokuHorse horse = manager.horse(e.getPlayer().getUniqueId()).getNow(null);
+        if (horse != null) {
+            horse.despawn();
+        }
         manager.unload(e.getPlayer().getUniqueId());
     }
 
