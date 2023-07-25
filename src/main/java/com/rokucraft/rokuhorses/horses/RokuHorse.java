@@ -54,7 +54,13 @@ public final class RokuHorse {
             h.setJumpStrength(BASE_JUMP_STRENGTH);
             h.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(BASE_SPEED);
         });
+    }
 
+    public void despawn() {
+        if (horse != null) {
+            horse.remove();
+            horse = null;
+        }
     }
 
     public boolean walkTo(Player player) {
