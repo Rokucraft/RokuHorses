@@ -1,17 +1,27 @@
 package com.rokucraft.rokuhorses.horses;
 
+import com.rokucraft.rokuhorses.RokuHorses;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Horse;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 import java.util.concurrent.CompletableFuture;
 
 public abstract class HorseManager {
 
     private final Map<UUID, CompletableFuture<RokuHorse>> cache = new HashMap<>();
 
+    public HorseManager(RokuHorses plugin) {
+        // Save horse data every 30 seconds
+        Bukkit.getScheduler().runTaskTimer(
+                plugin,
+                () -> cache.values().stream()
+                        .map(future -> future.getNow(null))
+                        .filter(Objects::nonNull)
+                        .filter(RokuHorse::isSpawned)
+                        .forEach(this::save),
+                20 * 30, 20 * 30);
+    }
 
     public CompletableFuture<RokuHorse> horse(UUID uuid) {
         return cache.computeIfAbsent(uuid, key -> CompletableFuture.supplyAsync(() ->

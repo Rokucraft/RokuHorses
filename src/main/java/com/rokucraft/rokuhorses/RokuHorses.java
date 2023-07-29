@@ -26,7 +26,7 @@ public final class RokuHorses extends JavaPlugin {
             this.getServer().getPluginManager().disablePlugin(this);
             return;
         }
-        this.horseManager = new SQLiteHorseManager(getDataFolder().toPath().resolve("storage.db"));
+        this.horseManager = new SQLiteHorseManager(this, getDataFolder().toPath().resolve("storage.db"));
         List.of(
                 new SpawnCommand(this),
                 new DespawnCommand(this),
@@ -35,7 +35,7 @@ public final class RokuHorses extends JavaPlugin {
                 new NameCommand(this)
         ).forEach(cmd -> cmd.init(commandManager));
         this.getServer().getPluginManager().registerEvents(new HorseListener(), this);
-        this.getServer().getPluginManager().registerEvents(new PlayerJoinListener(horseManager), this);
+        this.getServer().getPluginManager().registerEvents(new PlayerJoinListener(this), this);
     }
 
     public HorseManager getHorseManager() {
