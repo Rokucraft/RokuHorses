@@ -35,9 +35,12 @@ public class WhistleCommand implements RokuHorsesCommand {
 
     public void callHorse(Audience sender, Player player) {
         RokuHorse horse = horseManager.horse(player.getUniqueId()).join();
+        if (!horse.isSpawned()) {
+            sender.sendMessage(Component.text("Your horse can't hear you!", NamedTextColor.RED));
+        }
         boolean success = horse.walkTo(player);
         if (!success) {
-            sender.sendMessage(Component.text("This horse is out of reach", NamedTextColor.RED));
+            sender.sendMessage(Component.text("Your horse is out of reach", NamedTextColor.RED));
         }
     }
 }
