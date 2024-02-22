@@ -1,15 +1,16 @@
 package com.rokucraft.rokuhorses.command.commands;
 
-import cloud.commandframework.Command;
-import cloud.commandframework.CommandManager;
-import cloud.commandframework.bukkit.parsers.PlayerArgument;
-import cloud.commandframework.bukkit.parsers.location.LocationArgument;
-import com.rokucraft.rokuhorses.horses.HorseManager;
 import com.rokucraft.rokuhorses.RokuHorses;
 import com.rokucraft.rokuhorses.command.RokuHorsesCommand;
+import com.rokucraft.rokuhorses.horses.HorseManager;
 import org.bukkit.Location;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.incendo.cloud.Command;
+import org.incendo.cloud.CommandManager;
+
+import static org.incendo.cloud.bukkit.parser.PlayerParser.playerParser;
+import static org.incendo.cloud.bukkit.parser.location.LocationParser.locationParser;
 
 public class SpawnCommand implements RokuHorsesCommand {
     private final HorseManager horseManager;
@@ -24,17 +25,18 @@ public class SpawnCommand implements RokuHorsesCommand {
                 .permission("rokuhorses.command.spawn");
 
         manager.command(root.senderType(Player.class).handler(ctx -> {
-            Player player = (Player) ctx.getSender();
+            Player player = ctx.sender();
             horseManager.horse(player.getUniqueId()).join().spawn(player.getLocation());
         }));
 
-        manager.command(root.argument(PlayerArgument.of("player"))
-                .argument(LocationArgument.of("location"))
-                .handler(ctx -> {
-                    Player player = ctx.get("player");
-                    Location location = ctx.get("location");
-                    horseManager.horse(player.getUniqueId()).join().spawn(location);
-                })
+        manager.command(
+                root.required("player", playerParser())
+                        .required("location", locationParser())
+                        .handler(ctx -> {
+                            Player player = ctx.get("player");
+                            Location location = ctx.get("location");
+                            horseManager.horse(player.getUniqueId()).join().spawn(location);
+                        })
         );
     }
 }

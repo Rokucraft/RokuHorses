@@ -1,16 +1,16 @@
 package com.rokucraft.rokuhorses.command.commands;
 
-import cloud.commandframework.CommandManager;
-import cloud.commandframework.context.CommandContext;
-import com.rokucraft.rokuhorses.horses.HorseManager;
-import com.rokucraft.rokuhorses.horses.RokuHorse;
 import com.rokucraft.rokuhorses.RokuHorses;
 import com.rokucraft.rokuhorses.command.RokuHorsesCommand;
+import com.rokucraft.rokuhorses.horses.HorseManager;
+import com.rokucraft.rokuhorses.horses.RokuHorse;
 import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.incendo.cloud.CommandManager;
+import org.incendo.cloud.context.CommandContext;
 
 public class WhistleCommand implements RokuHorsesCommand {
     private final HorseManager horseManager;
@@ -28,8 +28,8 @@ public class WhistleCommand implements RokuHorsesCommand {
         );
     }
 
-    private void execute(CommandContext<CommandSender> ctx) {
-        Player sender = (Player) ctx.getSender();
+    private void execute(CommandContext<Player> ctx) {
+        Player sender = ctx.sender();
         this.callHorse(sender, sender);
     }
 

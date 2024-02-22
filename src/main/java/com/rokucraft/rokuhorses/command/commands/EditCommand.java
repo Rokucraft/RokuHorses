@@ -1,9 +1,5 @@
 package com.rokucraft.rokuhorses.command.commands;
 
-import cloud.commandframework.CommandManager;
-import cloud.commandframework.arguments.standard.EnumArgument;
-import cloud.commandframework.arguments.standard.StringArgument;
-import cloud.commandframework.bukkit.parsers.OfflinePlayerArgument;
 import com.rokucraft.rokuhorses.RokuHorses;
 import com.rokucraft.rokuhorses.command.RokuHorsesCommand;
 import com.rokucraft.rokuhorses.horses.HorseManager;
@@ -11,8 +7,13 @@ import net.kyori.adventure.text.Component;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Horse;
+import org.incendo.cloud.CommandManager;
 
 import java.util.Optional;
+
+import static org.incendo.cloud.bukkit.parser.OfflinePlayerParser.offlinePlayerParser;
+import static org.incendo.cloud.parser.standard.EnumParser.enumParser;
+import static org.incendo.cloud.parser.standard.StringParser.greedyStringParser;
 
 public class EditCommand implements RokuHorsesCommand {
 
@@ -26,11 +27,11 @@ public class EditCommand implements RokuHorsesCommand {
     public void init(CommandManager<CommandSender> manager) {
         var root = manager.commandBuilder("horse")
                 .literal("edit")
-                .argument(OfflinePlayerArgument.of("player"));
+                .required("player", offlinePlayerParser());
         manager.command(
                 root.literal("style")
                         .permission("rokuhorses.command.edit.style")
-                        .argument(EnumArgument.of(Horse.Style.class, "style"))
+                        .required("style", enumParser(Horse.Style.class))
                         .handler(ctx -> {
                             OfflinePlayer player = ctx.get("player");
                             Horse.Style style = ctx.get("style");
@@ -45,7 +46,7 @@ public class EditCommand implements RokuHorsesCommand {
         manager.command(
                 root.literal("color")
                         .permission("rokuhorses.command.edit.color")
-                        .argument(EnumArgument.of(Horse.Color.class, "color"))
+                        .required("color", enumParser(Horse.Color.class))
                         .handler(ctx -> {
                             OfflinePlayer player = ctx.get("player");
                             Horse.Color color = ctx.get("color");
@@ -60,10 +61,10 @@ public class EditCommand implements RokuHorsesCommand {
         manager.command(
                 root.literal("name")
                         .permission("rokuhorses.command.edit.name")
-                        .argument(StringArgument.optional("name", StringArgument.StringMode.GREEDY))
+                        .optional("name", greedyStringParser())
                         .handler(ctx -> {
                             OfflinePlayer player = ctx.get("player");
-                            Optional<String> name = ctx.getOptional("name");
+                            Optional<String> name = ctx.optional("name");
                             horseManager.horse(player.getUniqueId()).thenAccept(
                                     horse -> {
                                         horse.name(name.map(Component::text).orElse(null));

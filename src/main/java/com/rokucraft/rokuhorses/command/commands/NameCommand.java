@@ -1,7 +1,5 @@
 package com.rokucraft.rokuhorses.command.commands;
 
-import cloud.commandframework.CommandManager;
-import cloud.commandframework.arguments.standard.StringArgument;
 import com.rokucraft.rokuhorses.RokuHorses;
 import com.rokucraft.rokuhorses.command.RokuHorsesCommand;
 import com.rokucraft.rokuhorses.horses.HorseManager;
@@ -9,8 +7,11 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.incendo.cloud.CommandManager;
 
 import java.util.Optional;
+
+import static org.incendo.cloud.parser.standard.StringParser.greedyStringParser;
 
 public class NameCommand implements RokuHorsesCommand {
     HorseManager horseManager;
@@ -25,11 +26,11 @@ public class NameCommand implements RokuHorsesCommand {
                 manager.commandBuilder("horse")
                         .literal("name")
                         .permission("rokuhorses.command.name")
-                        .argument(StringArgument.optional("name", StringArgument.StringMode.GREEDY))
+                        .optional("name", greedyStringParser())
                         .senderType(Player.class)
                         .handler(ctx -> {
-                            Optional<String> name = ctx.getOptional("name");
-                            Player player = ((Player) ctx.getSender());
+                            Optional<String> name = ctx.optional("name");
+                            Player player = ctx.sender();
                             horseManager.horse(player.getUniqueId()).thenAccept(horse -> {
                                 horse.name(name.map(Component::text).orElse(null));
                                 horseManager.save(horse);

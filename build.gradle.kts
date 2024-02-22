@@ -17,7 +17,7 @@ dependencies {
 
     // Loaded through Spigot's library loading
     compileOnly("org.flywaydb:flyway-core:9.20.1")
-    compileOnly("cloud.commandframework:cloud-paper:1.8.3")
+    compileOnly("org.incendo:cloud-paper:2.0.0-beta.2")
     compileOnly("org.jdbi:jdbi3-core:3.39.1")
 }
 
