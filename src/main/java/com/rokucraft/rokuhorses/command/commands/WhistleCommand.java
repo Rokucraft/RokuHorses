@@ -5,12 +5,13 @@ import com.rokucraft.rokuhorses.command.RokuHorsesCommand;
 import com.rokucraft.rokuhorses.horses.HorseManager;
 import com.rokucraft.rokuhorses.horses.RokuHorse;
 import net.kyori.adventure.audience.Audience;
-import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.incendo.cloud.CommandManager;
 import org.incendo.cloud.context.CommandContext;
+
+import static net.kyori.adventure.text.Component.text;
 
 public class WhistleCommand implements RokuHorsesCommand {
     private final HorseManager horseManager;
@@ -36,11 +37,11 @@ public class WhistleCommand implements RokuHorsesCommand {
     public void callHorse(Audience sender, Player player) {
         RokuHorse horse = horseManager.horse(player.getUniqueId()).join();
         if (!horse.isSpawned()) {
-            sender.sendMessage(Component.text("Your horse can't hear you!", NamedTextColor.RED));
+            sender.sendMessage(text("Your horse can't hear you!", NamedTextColor.RED));
         }
         boolean success = horse.walkTo(player);
         if (!success) {
-            sender.sendMessage(Component.text("Your horse is out of reach", NamedTextColor.RED));
+            sender.sendMessage(text("Your horse is out of reach", NamedTextColor.RED));
         }
     }
 }

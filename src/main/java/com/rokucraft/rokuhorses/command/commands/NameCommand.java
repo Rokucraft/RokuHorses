@@ -11,6 +11,7 @@ import org.incendo.cloud.CommandManager;
 
 import java.util.Optional;
 
+import static net.kyori.adventure.text.Component.*;
 import static org.incendo.cloud.parser.standard.StringParser.greedyStringParser;
 
 public class NameCommand implements RokuHorsesCommand {
@@ -35,12 +36,12 @@ public class NameCommand implements RokuHorsesCommand {
                                 horse.name(name.map(Component::text).orElse(null));
                                 horseManager.save(horse);
                                 if (name.isPresent()) {
-                                    player.sendMessage(Component.text(
+                                    player.sendMessage(text(
                                             "Your horse's name has been changed to " + name.get(),
                                             NamedTextColor.GREEN
                                     ));
                                 } else {
-                                    player.sendMessage(Component.text(
+                                    player.sendMessage(text(
                                             "Your horse's name has been removed", NamedTextColor.GREEN
                                     ));
                                 }
