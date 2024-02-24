@@ -1,9 +1,9 @@
 package com.rokucraft.rokuhorses;
 
 import com.rokucraft.rokuhorses.command.commands.*;
+import com.rokucraft.rokuhorses.di.DaggerRokuHorsesComponent;
+import com.rokucraft.rokuhorses.di.RokuHorsesComponent;
 import com.rokucraft.rokuhorses.horses.HorseManager;
-import com.rokucraft.rokuhorses.horses.db.HorseRepository;
-import com.rokucraft.rokuhorses.horses.db.SQLiteHorseRepository;
 import com.rokucraft.rokuhorses.listeners.HorseListener;
 import com.rokucraft.rokuhorses.listeners.PlayerJoinListener;
 import org.bukkit.command.CommandSender;
@@ -27,8 +27,10 @@ public final class RokuHorses extends JavaPlugin {
             this.getServer().getPluginManager().disablePlugin(this);
             return;
         }
-        HorseRepository horseRepository = new SQLiteHorseRepository(getDataFolder().toPath().resolve("storage.db"));
-        this.horseManager = new HorseManager(this, horseRepository);
+        RokuHorsesComponent component = DaggerRokuHorsesComponent.builder()
+                .plugin(this)
+                .build();
+        horseManager = component.horseManager();
         List.of(
                 new SpawnCommand(this),
                 new DespawnCommand(this),

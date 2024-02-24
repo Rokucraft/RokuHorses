@@ -20,6 +20,9 @@ dependencies {
     library("org.flywaydb:flyway-core:10.8.1")
     library("org.incendo:cloud-paper:2.0.0-beta.3")
     library("org.jdbi:jdbi3-core:3.45.0")
+
+    library("com.google.dagger:dagger:2.50")
+    annotationProcessor("com.google.dagger:dagger-compiler:2.50")
 }
 
 bukkit {

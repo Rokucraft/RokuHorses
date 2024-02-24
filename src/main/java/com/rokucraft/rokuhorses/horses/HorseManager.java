@@ -5,6 +5,7 @@ import com.rokucraft.rokuhorses.horses.db.HorseRepository;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Horse;
 
+import javax.inject.Inject;
 import java.util.*;
 import java.util.concurrent.CompletableFuture;
 
@@ -13,6 +14,7 @@ public class HorseManager {
     private final Map<UUID, CompletableFuture<RokuHorse>> cache = new HashMap<>();
     private final HorseRepository horseRepository;
 
+    @Inject
     public HorseManager(RokuHorses plugin, HorseRepository horseRepository) {
         this.horseRepository = horseRepository;
         // Save horse data every 30 seconds
