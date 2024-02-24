@@ -1,40 +1,22 @@
 package com.rokucraft.rokuhorses.horses.db;
 
-import com.rokucraft.rokuhorses.RokuHorses;
 import com.rokucraft.rokuhorses.horses.RokuHorse;
 import net.kyori.adventure.text.serializer.gson.GsonComponentSerializer;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Horse;
-import org.flywaydb.core.Flyway;
 import org.jdbi.v3.core.Jdbi;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
+import javax.inject.Inject;
 import java.util.Optional;
 import java.util.UUID;
 
 public class SQLiteHorseRepository implements HorseRepository {
     private final Jdbi jdbi;
 
-    public SQLiteHorseRepository(Path path) {
-        try {
-            Files.createDirectories(path.getParent());
-        } catch (IOException e) {
-            throw new RuntimeException("Unable to create parent directories for " + path);
-        }
-        String url = "jdbc:sqlite:" + path;
-        Flyway.configure(RokuHorses.class.getClassLoader())
-                .baselineVersion("0")
-                .baselineOnMigrate(true)
-                .dataSource(url, null, null)
-                .validateMigrationNaming(true)
-                .validateOnMigrate(true)
-                .load()
-                .migrate();
-
-        this.jdbi = Jdbi.create(url);
+    @Inject
+    public SQLiteHorseRepository(Jdbi jdbi) {
+        this.jdbi = jdbi;
     }
 
     @Override
