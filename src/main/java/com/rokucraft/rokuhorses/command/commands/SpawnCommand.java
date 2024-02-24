@@ -1,6 +1,5 @@
 package com.rokucraft.rokuhorses.command.commands;
 
-import com.rokucraft.rokuhorses.RokuHorses;
 import com.rokucraft.rokuhorses.command.RokuHorsesCommand;
 import com.rokucraft.rokuhorses.horses.HorseManager;
 import org.bukkit.Location;
@@ -9,14 +8,17 @@ import org.bukkit.entity.Player;
 import org.incendo.cloud.Command;
 import org.incendo.cloud.CommandManager;
 
+import javax.inject.Inject;
+
 import static org.incendo.cloud.bukkit.parser.PlayerParser.playerParser;
 import static org.incendo.cloud.bukkit.parser.location.LocationParser.locationParser;
 
 public class SpawnCommand implements RokuHorsesCommand {
     private final HorseManager horseManager;
 
-    public SpawnCommand(RokuHorses plugin) {
-        this.horseManager = plugin.getHorseManager();
+    @Inject
+    public SpawnCommand(HorseManager horseManager) {
+        this.horseManager = horseManager;
     }
 
     public void init(CommandManager<CommandSender> manager) {

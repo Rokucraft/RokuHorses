@@ -1,6 +1,5 @@
 package com.rokucraft.rokuhorses.command.commands;
 
-import com.rokucraft.rokuhorses.RokuHorses;
 import com.rokucraft.rokuhorses.command.RokuHorsesCommand;
 import com.rokucraft.rokuhorses.horses.HorseManager;
 import com.rokucraft.rokuhorses.horses.RokuHorse;
@@ -9,13 +8,16 @@ import org.bukkit.entity.Player;
 import org.incendo.cloud.Command;
 import org.incendo.cloud.CommandManager;
 
+import javax.inject.Inject;
+
 import static org.incendo.cloud.bukkit.parser.PlayerParser.playerParser;
 
 public class DespawnCommand implements RokuHorsesCommand {
     private final HorseManager horseManager;
 
-    public DespawnCommand(RokuHorses plugin) {
-        this.horseManager = plugin.getHorseManager();
+    @Inject
+    public DespawnCommand(HorseManager horseManager) {
+        this.horseManager = horseManager;
     }
 
     @Override

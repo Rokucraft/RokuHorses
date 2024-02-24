@@ -1,6 +1,5 @@
 package com.rokucraft.rokuhorses.command.commands;
 
-import com.rokucraft.rokuhorses.RokuHorses;
 import com.rokucraft.rokuhorses.command.RokuHorsesCommand;
 import com.rokucraft.rokuhorses.horses.HorseManager;
 import net.kyori.adventure.text.Component;
@@ -9,16 +8,18 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.incendo.cloud.CommandManager;
 
+import javax.inject.Inject;
 import java.util.Optional;
 
-import static net.kyori.adventure.text.Component.*;
+import static net.kyori.adventure.text.Component.text;
 import static org.incendo.cloud.parser.standard.StringParser.greedyStringParser;
 
 public class NameCommand implements RokuHorsesCommand {
     HorseManager horseManager;
 
-    public NameCommand(RokuHorses plugin) {
-        this.horseManager = plugin.getHorseManager();
+    @Inject
+    public NameCommand(HorseManager horseManager) {
+        this.horseManager = horseManager;
     }
 
     @Override

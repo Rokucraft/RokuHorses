@@ -1,18 +1,19 @@
 package com.rokucraft.rokuhorses.di;
 
 import com.rokucraft.rokuhorses.RokuHorses;
-import com.rokucraft.rokuhorses.horses.HorseManager;
+import com.rokucraft.rokuhorses.command.RokuHorsesCommand;
 import dagger.BindsInstance;
 import dagger.Component;
 import org.bukkit.event.Listener;
 
 import java.util.Set;
 
-@Component(modules = {DataModule.class, ListenerModule.class})
+@Component(modules = {DataModule.class, ListenerModule.class, CommandModule.class})
 public interface RokuHorsesComponent {
-    HorseManager horseManager();
 
     Set<Listener> listeners();
+
+    Set<RokuHorsesCommand> commands();
 
     @Component.Builder
     interface Builder {

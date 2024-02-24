@@ -1,6 +1,5 @@
 package com.rokucraft.rokuhorses.command.commands;
 
-import com.rokucraft.rokuhorses.RokuHorses;
 import com.rokucraft.rokuhorses.command.RokuHorsesCommand;
 import com.rokucraft.rokuhorses.horses.HorseManager;
 import com.rokucraft.rokuhorses.horses.RokuHorse;
@@ -11,13 +10,16 @@ import org.bukkit.entity.Player;
 import org.incendo.cloud.CommandManager;
 import org.incendo.cloud.context.CommandContext;
 
+import javax.inject.Inject;
+
 import static net.kyori.adventure.text.Component.text;
 
 public class WhistleCommand implements RokuHorsesCommand {
     private final HorseManager horseManager;
 
-    public WhistleCommand(RokuHorses plugin) {
-        this.horseManager = plugin.getHorseManager();
+    @Inject
+    public WhistleCommand(HorseManager horseManager) {
+        this.horseManager = horseManager;
     }
 
     public void init(CommandManager<CommandSender> manager) {

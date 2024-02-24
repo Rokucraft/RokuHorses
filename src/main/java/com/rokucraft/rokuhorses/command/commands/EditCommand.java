@@ -1,6 +1,5 @@
 package com.rokucraft.rokuhorses.command.commands;
 
-import com.rokucraft.rokuhorses.RokuHorses;
 import com.rokucraft.rokuhorses.command.RokuHorsesCommand;
 import com.rokucraft.rokuhorses.horses.HorseManager;
 import net.kyori.adventure.text.Component;
@@ -9,6 +8,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Horse;
 import org.incendo.cloud.CommandManager;
 
+import javax.inject.Inject;
 import java.util.Optional;
 
 import static org.incendo.cloud.bukkit.parser.OfflinePlayerParser.offlinePlayerParser;
@@ -19,8 +19,9 @@ public class EditCommand implements RokuHorsesCommand {
 
     HorseManager horseManager;
 
-    public EditCommand(RokuHorses plugin) {
-        horseManager = plugin.getHorseManager();
+    @Inject
+    public EditCommand(HorseManager horseManager) {
+        this.horseManager = horseManager;
     }
 
     @Override
