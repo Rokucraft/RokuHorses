@@ -1,17 +1,20 @@
 package com.rokucraft.rokuhorses.horses;
 
 import com.rokucraft.rokuhorses.RokuHorses;
+import com.rokucraft.rokuhorses.horses.db.HorseRepository;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Horse;
 
 import java.util.*;
 import java.util.concurrent.CompletableFuture;
 
-public abstract class HorseManager {
+public class HorseManager {
 
     private final Map<UUID, CompletableFuture<RokuHorse>> cache = new HashMap<>();
+    private final HorseRepository horseRepository;
 
-    public HorseManager(RokuHorses plugin) {
+    public HorseManager(RokuHorses plugin, HorseRepository horseRepository) {
+        this.horseRepository = horseRepository;
         // Save horse data every 30 seconds
         Bukkit.getScheduler().runTaskTimer(
                 plugin,
@@ -25,7 +28,7 @@ public abstract class HorseManager {
 
     public CompletableFuture<RokuHorse> horse(UUID uuid) {
         return cache.computeIfAbsent(uuid, key -> CompletableFuture.supplyAsync(() ->
-                fetch(uuid).orElseGet(() -> {
+                horseRepository.fetch(uuid).orElseGet(() -> {
                     RokuHorse newHorse = new RokuHorse(
                             uuid,
                             null,
@@ -38,21 +41,15 @@ public abstract class HorseManager {
     }
 
     public CompletableFuture<Void> save(RokuHorse horse) {
-        return CompletableFuture.runAsync(() -> saveSync(horse));
+        return CompletableFuture.runAsync(() -> horseRepository.saveSync(horse));
     }
 
     public CompletableFuture<Void> create(RokuHorse horse) {
-        return CompletableFuture.runAsync(() -> createSync(horse));
+        return CompletableFuture.runAsync(() -> horseRepository.createSync(horse));
     }
 
     public CompletableFuture<Void> unload(UUID uuid) {
         cache.remove(uuid);
         return CompletableFuture.completedFuture(null);
     }
-
-    protected abstract Optional<RokuHorse> fetch(UUID uuid);
-
-    protected abstract void saveSync(RokuHorse horse);
-
-    protected abstract void createSync(RokuHorse horse);
 }

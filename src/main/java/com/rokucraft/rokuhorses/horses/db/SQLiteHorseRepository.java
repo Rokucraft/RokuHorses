@@ -1,7 +1,6 @@
 package com.rokucraft.rokuhorses.horses.db;
 
 import com.rokucraft.rokuhorses.RokuHorses;
-import com.rokucraft.rokuhorses.horses.HorseManager;
 import com.rokucraft.rokuhorses.horses.RokuHorse;
 import net.kyori.adventure.text.serializer.gson.GsonComponentSerializer;
 import org.bukkit.Bukkit;
@@ -16,11 +15,10 @@ import java.nio.file.Path;
 import java.util.Optional;
 import java.util.UUID;
 
-public class SQLiteHorseManager extends HorseManager {
+public class SQLiteHorseRepository implements HorseRepository {
     private final Jdbi jdbi;
 
-    public SQLiteHorseManager(RokuHorses plugin, Path path) {
-        super(plugin);
+    public SQLiteHorseRepository(Path path) {
         try {
             Files.createDirectories(path.getParent());
         } catch (IOException e) {
@@ -40,7 +38,7 @@ public class SQLiteHorseManager extends HorseManager {
     }
 
     @Override
-    protected Optional<RokuHorse> fetch(UUID uuid) {
+    public Optional<RokuHorse> fetch(UUID uuid) {
         return jdbi.withHandle(handle ->
                 handle.select("""
                                 SELECT owner,
@@ -80,7 +78,7 @@ public class SQLiteHorseManager extends HorseManager {
     }
 
     @Override
-    protected void saveSync(RokuHorse horse) {
+    public void saveSync(RokuHorse horse) {
         Location loc = horse.lastKnownLocation();
         jdbi.useHandle(handle ->
                 handle.createUpdate("""
@@ -108,7 +106,7 @@ public class SQLiteHorseManager extends HorseManager {
     }
 
     @Override
-    protected void createSync(RokuHorse horse) {
+    public void createSync(RokuHorse horse) {
         jdbi.useHandle(handle ->
                 handle.createUpdate("""
                                 INSERT INTO horse(owner, name, color, style)
