@@ -1,9 +1,0 @@
-name: RokuHorses
-version: '${version}'
-main: com.rokucraft.rokuhorses.RokuHorses
-api-version: 1.19
-authors: [ Aikovdp ]
-libraries:
-  - org.flywaydb:flyway-core:9.20.1
-  - org.jdbi:jdbi3-core:3.39.1
-  - cloud.commandframework:cloud-paper:1.8.3

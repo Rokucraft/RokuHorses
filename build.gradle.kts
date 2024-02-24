@@ -1,6 +1,7 @@
 plugins {
     `java-library`
     id("xyz.jpenilla.run-paper") version "2.0.0"
+    id("net.minecrell.plugin-yml.bukkit") version "0.6.0"
 }
 
 group = "com.rokucraft"
@@ -16,9 +17,17 @@ dependencies {
     compileOnly("org.xerial:sqlite-jdbc:3.42.0.0")
 
     // Loaded through Spigot's library loading
-    compileOnly("org.flywaydb:flyway-core:9.20.1")
-    compileOnly("org.incendo:cloud-paper:2.0.0-beta.2")
-    compileOnly("org.jdbi:jdbi3-core:3.39.1")
+    library("org.flywaydb:flyway-core:9.20.1")
+    library("org.incendo:cloud-paper:2.0.0-beta.2")
+    library("org.jdbi:jdbi3-core:3.39.1")
+}
+
+bukkit {
+    name = "RokuHorses"
+    version = project.version.toString()
+    main = "com.rokucraft.rokuhorses.RokuHorses"
+    apiVersion = "1.19"
+    author = "Aikovdp"
 }
 
 java {
@@ -30,13 +39,5 @@ java {
 tasks {
     runServer {
         minecraftVersion("1.19.4")
-    }
-    processResources {
-        val props = "version" to version
-        inputs.properties(props)
-        filteringCharset = "UTF-8"
-        filesMatching("plugin.yml") {
-            expand(props)
-        }
     }
 }
