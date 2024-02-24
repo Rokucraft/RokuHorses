@@ -10,13 +10,16 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
+import javax.inject.Inject;
+
 public class PlayerJoinListener implements Listener {
     private final RokuHorses plugin;
     private final HorseManager manager;
 
-    public PlayerJoinListener(RokuHorses plugin) {
+    @Inject
+    public PlayerJoinListener(RokuHorses plugin, HorseManager manager) {
         this.plugin = plugin;
-        this.manager = plugin.getHorseManager();
+        this.manager = manager;
     }
 
     @EventHandler

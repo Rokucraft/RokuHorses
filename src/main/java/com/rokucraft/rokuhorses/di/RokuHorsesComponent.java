@@ -4,10 +4,15 @@ import com.rokucraft.rokuhorses.RokuHorses;
 import com.rokucraft.rokuhorses.horses.HorseManager;
 import dagger.BindsInstance;
 import dagger.Component;
+import org.bukkit.event.Listener;
 
-@Component(modules = {DataModule.class})
+import java.util.Set;
+
+@Component(modules = {DataModule.class, ListenerModule.class})
 public interface RokuHorsesComponent {
     HorseManager horseManager();
+
+    Set<Listener> listeners();
 
     @Component.Builder
     interface Builder {

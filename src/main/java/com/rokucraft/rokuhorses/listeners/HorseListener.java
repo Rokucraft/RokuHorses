@@ -8,9 +8,16 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.HorseInventory;
 import org.spigotmc.event.entity.EntityMountEvent;
 
+import javax.inject.Inject;
+
 import static net.kyori.adventure.text.Component.text;
 
 public class HorseListener implements Listener {
+
+    @Inject
+    public HorseListener() {
+    }
+
     @EventHandler
     public void onInventoryClick(InventoryClickEvent e) {
         if (e.getClickedInventory() instanceof HorseInventory) {

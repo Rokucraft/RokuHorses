@@ -38,8 +38,8 @@ public final class RokuHorses extends JavaPlugin {
                 new EditCommand(this),
                 new NameCommand(this)
         ).forEach(cmd -> cmd.init(commandManager));
-        this.getServer().getPluginManager().registerEvents(new HorseListener(), this);
-        this.getServer().getPluginManager().registerEvents(new PlayerJoinListener(this), this);
+
+        component.listeners().forEach(listener -> this.getServer().getPluginManager().registerEvents(listener, this));
     }
 
     public HorseManager getHorseManager() {
