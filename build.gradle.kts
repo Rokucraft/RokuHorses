@@ -14,12 +14,12 @@ repositories {
 
 dependencies {
     compileOnly("io.papermc.paper:paper-api:1.19.4-R0.1-SNAPSHOT")
-    compileOnly("org.xerial:sqlite-jdbc:3.42.0.0")
+    compileOnly("org.xerial:sqlite-jdbc:3.45.1.0")
 
     // Loaded through Spigot's library loading
-    library("org.flywaydb:flyway-core:9.20.1")
-    library("org.incendo:cloud-paper:2.0.0-beta.2")
-    library("org.jdbi:jdbi3-core:3.39.1")
+    library("org.flywaydb:flyway-core:10.8.1")
+    library("org.incendo:cloud-paper:2.0.0-beta.3")
+    library("org.jdbi:jdbi3-core:3.45.0")
 }
 
 bukkit {
