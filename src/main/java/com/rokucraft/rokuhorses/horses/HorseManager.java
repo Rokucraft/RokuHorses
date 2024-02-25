@@ -50,8 +50,7 @@ public class HorseManager {
         return CompletableFuture.runAsync(() -> horseRepository.insert(horse));
     }
 
-    public CompletableFuture<Void> unload(UUID uuid) {
+    public void unload(UUID uuid) {
         cache.remove(uuid);
-        return CompletableFuture.completedFuture(null);
     }
 }
