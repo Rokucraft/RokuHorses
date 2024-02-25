@@ -15,7 +15,7 @@ import static net.kyori.adventure.text.Component.text;
 import static org.incendo.cloud.parser.standard.StringParser.greedyStringParser;
 
 public class NameCommand implements RokuHorsesCommand {
-    HorseManager horseManager;
+    private final HorseManager horseManager;
 
     @Inject
     public NameCommand(HorseManager horseManager) {

@@ -17,7 +17,7 @@ import static org.incendo.cloud.parser.standard.StringParser.greedyStringParser;
 
 public class EditCommand implements RokuHorsesCommand {
 
-    HorseManager horseManager;
+    private final HorseManager horseManager;
 
     @Inject
     public EditCommand(HorseManager horseManager) {
