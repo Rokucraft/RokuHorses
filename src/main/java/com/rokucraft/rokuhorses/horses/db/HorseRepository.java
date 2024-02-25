@@ -6,9 +6,9 @@ import java.util.Optional;
 import java.util.UUID;
 
 public interface HorseRepository {
-    Optional<RokuHorse> fetch(UUID uuid);
+    Optional<RokuHorse> getByPlayerId(UUID uuid);
 
-    void saveSync(RokuHorse horse);
+    void update(RokuHorse horse);
 
-    void createSync(RokuHorse horse);
+    void insert(RokuHorse horse);
 }

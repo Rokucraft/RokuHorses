@@ -20,7 +20,7 @@ public class SQLiteHorseRepository implements HorseRepository {
     }
 
     @Override
-    public Optional<RokuHorse> fetch(UUID uuid) {
+    public Optional<RokuHorse> getByPlayerId(UUID uuid) {
         return jdbi.withHandle(handle ->
                 handle.select("""
                                 SELECT owner,
@@ -60,7 +60,7 @@ public class SQLiteHorseRepository implements HorseRepository {
     }
 
     @Override
-    public void saveSync(RokuHorse horse) {
+    public void update(RokuHorse horse) {
         Location loc = horse.lastKnownLocation();
         jdbi.useHandle(handle ->
                 handle.createUpdate("""
@@ -88,7 +88,7 @@ public class SQLiteHorseRepository implements HorseRepository {
     }
 
     @Override
-    public void createSync(RokuHorse horse) {
+    public void insert(RokuHorse horse) {
         jdbi.useHandle(handle ->
                 handle.createUpdate("""
                                 INSERT INTO horse(owner, name, color, style)

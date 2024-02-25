@@ -30,7 +30,7 @@ public class HorseManager {
 
     public CompletableFuture<RokuHorse> horse(UUID uuid) {
         return cache.computeIfAbsent(uuid, key -> CompletableFuture.supplyAsync(() ->
-                horseRepository.fetch(uuid).orElseGet(() -> {
+                horseRepository.getByPlayerId(uuid).orElseGet(() -> {
                     RokuHorse newHorse = new RokuHorse(
                             uuid,
                             null,
@@ -43,11 +43,11 @@ public class HorseManager {
     }
 
     public CompletableFuture<Void> save(RokuHorse horse) {
-        return CompletableFuture.runAsync(() -> horseRepository.saveSync(horse));
+        return CompletableFuture.runAsync(() -> horseRepository.update(horse));
     }
 
     public CompletableFuture<Void> create(RokuHorse horse) {
-        return CompletableFuture.runAsync(() -> horseRepository.createSync(horse));
+        return CompletableFuture.runAsync(() -> horseRepository.insert(horse));
     }
 
     public CompletableFuture<Void> unload(UUID uuid) {
