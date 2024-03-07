@@ -4,11 +4,12 @@ import com.rokucraft.rokuhorses.horses.RokuHorse;
 
 import java.util.Optional;
 import java.util.UUID;
+import java.util.concurrent.CompletableFuture;
 
 public interface HorseRepository {
-    Optional<RokuHorse> getByPlayerId(UUID uuid);
+    CompletableFuture<Optional<RokuHorse>> getByPlayerId(UUID uuid);
 
-    void update(RokuHorse horse);
+    CompletableFuture<Void> update(RokuHorse horse);
 
-    void insert(RokuHorse horse);
+    CompletableFuture<Void> insert(RokuHorse horse);
 }

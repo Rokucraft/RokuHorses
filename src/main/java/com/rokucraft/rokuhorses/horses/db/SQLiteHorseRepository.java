@@ -10,6 +10,7 @@ import org.jdbi.v3.core.Jdbi;
 import javax.inject.Inject;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.concurrent.CompletableFuture;
 
 public class SQLiteHorseRepository implements HorseRepository {
     private final Jdbi jdbi;
@@ -19,8 +20,9 @@ public class SQLiteHorseRepository implements HorseRepository {
         this.jdbi = jdbi;
     }
 
-    @Override
-    public Optional<RokuHorse> getByPlayerId(UUID uuid) {
+
+
+    public Optional<RokuHorse> getByPlayerIdSync(UUID uuid) {
         return jdbi.withHandle(handle ->
                 handle.select("""
                                 SELECT owner,
@@ -59,8 +61,7 @@ public class SQLiteHorseRepository implements HorseRepository {
         );
     }
 
-    @Override
-    public void update(RokuHorse horse) {
+    public void updateSync(RokuHorse horse) {
         Location loc = horse.lastKnownLocation();
         jdbi.useHandle(handle ->
                 handle.createUpdate("""
@@ -87,8 +88,7 @@ public class SQLiteHorseRepository implements HorseRepository {
         );
     }
 
-    @Override
-    public void insert(RokuHorse horse) {
+    public void insertSync(RokuHorse horse) {
         jdbi.useHandle(handle ->
                 handle.createUpdate("""
                                 INSERT INTO horse(owner, name, color, style)
@@ -103,5 +103,20 @@ public class SQLiteHorseRepository implements HorseRepository {
                         .bind("style", horse.style())
                         .execute()
         );
+    }
+
+    @Override
+    public CompletableFuture<Optional<RokuHorse>> getByPlayerId(UUID uuid) {
+        return CompletableFuture.supplyAsync(() -> getByPlayerIdSync(uuid));
+    }
+
+    @Override
+    public CompletableFuture<Void> update(RokuHorse horse) {
+        return CompletableFuture.runAsync(() -> updateSync(horse));
+    }
+
+    @Override
+    public CompletableFuture<Void> insert(RokuHorse horse) {
+        return CompletableFuture.runAsync(() -> insertSync(horse));
     }
 }

@@ -3,7 +3,6 @@ package com.rokucraft.rokuhorses.horses;
 import com.rokucraft.rokuhorses.RokuHorses;
 import com.rokucraft.rokuhorses.horses.db.HorseRepository;
 import org.bukkit.Bukkit;
-import org.bukkit.entity.Horse;
 
 import javax.inject.Inject;
 import java.util.*;
@@ -11,7 +10,7 @@ import java.util.concurrent.CompletableFuture;
 
 public class HorseManager {
 
-    private final Map<UUID, CompletableFuture<RokuHorse>> cache = new HashMap<>();
+    private final Map<UUID, CompletableFuture<Optional<RokuHorse>>> cache = new HashMap<>();
     private final HorseRepository horseRepository;
 
     @Inject
@@ -22,32 +21,23 @@ public class HorseManager {
                 plugin,
                 () -> cache.values().stream()
                         .map(future -> future.getNow(null))
-                        .filter(Objects::nonNull)
+                        .filter(Optional::isPresent)
+                        .map(Optional::get)
                         .filter(RokuHorse::isSpawned)
                         .forEach(this::save),
                 20 * 30, 20 * 30);
     }
 
-    public CompletableFuture<RokuHorse> horse(UUID uuid) {
-        return cache.computeIfAbsent(uuid, key -> CompletableFuture.supplyAsync(() ->
-                horseRepository.getByPlayerId(uuid).orElseGet(() -> {
-                    RokuHorse newHorse = new RokuHorse(
-                            uuid,
-                            null,
-                            Horse.Color.CHESTNUT,
-                            Horse.Style.NONE
-                    );
-                    create(newHorse);
-                    return newHorse;
-                })));
+    public CompletableFuture<Optional<RokuHorse>> horse(UUID uuid) {
+        return cache.computeIfAbsent(uuid, (key) -> horseRepository.getByPlayerId(uuid));
     }
 
     public CompletableFuture<Void> save(RokuHorse horse) {
-        return CompletableFuture.runAsync(() -> horseRepository.update(horse));
+        return horseRepository.update(horse);
     }
 
     public CompletableFuture<Void> create(RokuHorse horse) {
-        return CompletableFuture.runAsync(() -> horseRepository.insert(horse));
+        return horseRepository.insert(horse);
     }
 
     public void unload(UUID uuid) {

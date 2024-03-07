@@ -2,6 +2,7 @@ package com.rokucraft.rokuhorses.command.commands;
 
 import com.rokucraft.rokuhorses.command.RokuHorsesCommand;
 import com.rokucraft.rokuhorses.horses.HorseManager;
+import com.rokucraft.rokuhorses.horses.RokuHorse;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.command.CommandSender;
@@ -33,20 +34,25 @@ public class NameCommand implements RokuHorsesCommand {
                         .handler(ctx -> {
                             Optional<String> name = ctx.optional("name");
                             Player player = ctx.sender();
-                            horseManager.horse(player.getUniqueId()).thenAccept(horse -> {
-                                horse.name(name.map(Component::text).orElse(null));
-                                horseManager.save(horse);
-                                if (name.isPresent()) {
-                                    player.sendMessage(text(
-                                            "Your horse's name has been changed to " + name.get(),
-                                            NamedTextColor.GREEN
-                                    ));
-                                } else {
-                                    player.sendMessage(text(
-                                            "Your horse's name has been removed", NamedTextColor.GREEN
-                                    ));
-                                }
-                            });
+                            horseManager.horse(player.getUniqueId()).thenAccept(
+                                    optionalHorse -> {
+                                        if (optionalHorse.isEmpty()) {
+                                            ctx.sender().sendMessage("This player does not have a horse.");
+                                        }
+                                        RokuHorse horse = optionalHorse.get();
+                                        horse.name(name.map(Component::text).orElse(null));
+                                        horseManager.save(horse);
+                                        if (name.isPresent()) {
+                                            player.sendMessage(text(
+                                                    "Your horse's name has been changed to " + name.get(),
+                                                    NamedTextColor.GREEN
+                                            ));
+                                        } else {
+                                            player.sendMessage(text(
+                                                    "Your horse's name has been removed", NamedTextColor.GREEN
+                                            ));
+                                        }
+                                    });
                         })
         );
     }
