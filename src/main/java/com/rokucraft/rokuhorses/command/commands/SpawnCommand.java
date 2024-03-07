@@ -11,7 +11,6 @@ import org.incendo.cloud.Command;
 import org.incendo.cloud.CommandManager;
 
 import javax.inject.Inject;
-import java.util.Optional;
 
 import static net.kyori.adventure.text.Component.text;
 import static org.incendo.cloud.bukkit.parser.PlayerParser.playerParser;
@@ -32,12 +31,12 @@ public class SpawnCommand implements RokuHorsesCommand {
 
         manager.command(root.senderType(Player.class).handler(ctx -> {
             Player player = ctx.sender();
-            Optional<RokuHorse> optionalHorse = horseManager.horse(player.getUniqueId()).join();
-            if (optionalHorse.isEmpty()) {
+            RokuHorse horse = horseManager.horse(player.getUniqueId()).join();
+            if (horse == null) {
                 ctx.sender().sendMessage(text("You do not have a horse!", NamedTextColor.RED));
                 return;
             }
-            optionalHorse.get().spawn(player.getLocation());
+            horse.spawn(player.getLocation());
         }));
 
         manager.command(
@@ -46,12 +45,12 @@ public class SpawnCommand implements RokuHorsesCommand {
                         .handler(ctx -> {
                             Player player = ctx.get("player");
                             Location location = ctx.get("location");
-                            Optional<RokuHorse> optionalHorse = horseManager.horse(player.getUniqueId()).join();
-                            if (optionalHorse.isEmpty()) {
+                            RokuHorse horse = horseManager.horse(player.getUniqueId()).join();
+                            if (horse == null) {
                                 ctx.sender().sendMessage(text("You do not have a horse!", NamedTextColor.RED));
                                 return;
                             }
-                            optionalHorse.get().spawn(location);
+                            horse.spawn(location);
                         })
         );
     }

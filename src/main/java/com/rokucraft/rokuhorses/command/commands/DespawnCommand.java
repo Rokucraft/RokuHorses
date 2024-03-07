@@ -10,8 +10,6 @@ import org.incendo.cloud.CommandManager;
 
 import javax.inject.Inject;
 
-import java.util.Optional;
-
 import static org.incendo.cloud.bukkit.parser.PlayerParser.playerParser;
 
 public class DespawnCommand implements RokuHorsesCommand {
@@ -32,9 +30,9 @@ public class DespawnCommand implements RokuHorsesCommand {
                         .permission("rokuhorses.command.despawn.self")
                         .handler(ctx -> {
                             Player player = ctx.sender();
-                            horseManager.horse(player.getUniqueId())
-                                    .getNow(Optional.empty())
-                                    .ifPresent(RokuHorse::despawn);
+                            RokuHorse horse = horseManager.horse(player.getUniqueId()).getNow(null);
+                            if (horse == null) return;
+                            horse.despawn();
                         })
         );
 
@@ -44,9 +42,9 @@ public class DespawnCommand implements RokuHorsesCommand {
                         .permission("rokuhorses.command.despawn.others")
                         .handler(ctx -> {
                             Player player = ctx.get("player");
-                            horseManager.horse(player.getUniqueId())
-                                    .getNow(Optional.empty())
-                                    .ifPresent(RokuHorse::despawn);
+                            RokuHorse horse = horseManager.horse(player.getUniqueId()).getNow(null);
+                            if (horse == null) return;
+                            horse.despawn();
                         })
         );
     }

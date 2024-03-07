@@ -2,7 +2,6 @@ package com.rokucraft.rokuhorses.command.commands;
 
 import com.rokucraft.rokuhorses.command.RokuHorsesCommand;
 import com.rokucraft.rokuhorses.horses.HorseManager;
-import com.rokucraft.rokuhorses.horses.RokuHorse;
 import net.kyori.adventure.text.Component;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
@@ -38,12 +37,11 @@ public class EditCommand implements RokuHorsesCommand {
                             OfflinePlayer player = ctx.get("player");
                             Horse.Style style = ctx.get("style");
                             horseManager.horse(player.getUniqueId()).thenAccept(
-                                    optionalHorse -> {
-                                        if (optionalHorse.isEmpty()) {
+                                    horse -> {
+                                        if (horse == null) {
                                             ctx.sender().sendMessage("This player does not have a horse.");
                                             return;
                                         }
-                                        RokuHorse horse = optionalHorse.get();
                                         horse.style(style);
                                         horseManager.save(horse);
                                     }
@@ -58,12 +56,11 @@ public class EditCommand implements RokuHorsesCommand {
                             OfflinePlayer player = ctx.get("player");
                             Horse.Color color = ctx.get("color");
                             horseManager.horse(player.getUniqueId()).thenAccept(
-                                    optionalHorse -> {
-                                        if (optionalHorse.isEmpty()) {
+                                    horse -> {
+                                        if (horse == null) {
                                             ctx.sender().sendMessage("This player does not have a horse.");
                                             return;
                                         }
-                                        RokuHorse horse = optionalHorse.get();
                                         horse.color(color);
                                         horseManager.save(horse);
                                     }
@@ -78,12 +75,11 @@ public class EditCommand implements RokuHorsesCommand {
                             OfflinePlayer player = ctx.get("player");
                             Optional<String> name = ctx.optional("name");
                             horseManager.horse(player.getUniqueId()).thenAccept(
-                                    optionalHorse -> {
-                                        if (optionalHorse.isEmpty()) {
+                                    horse -> {
+                                        if (horse == null) {
                                             ctx.sender().sendMessage("This player does not have a horse.");
                                             return;
                                         }
-                                        RokuHorse horse = optionalHorse.get();
                                         horse.name(name.map(Component::text).orElse(null));
                                         horseManager.save(horse);
                                     }

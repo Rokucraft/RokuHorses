@@ -2,7 +2,6 @@ package com.rokucraft.rokuhorses.command.commands;
 
 import com.rokucraft.rokuhorses.command.RokuHorsesCommand;
 import com.rokucraft.rokuhorses.horses.HorseManager;
-import com.rokucraft.rokuhorses.horses.RokuHorse;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.command.CommandSender;
@@ -35,12 +34,11 @@ public class NameCommand implements RokuHorsesCommand {
                             Optional<String> name = ctx.optional("name");
                             Player player = ctx.sender();
                             horseManager.horse(player.getUniqueId()).thenAccept(
-                                    optionalHorse -> {
-                                        if (optionalHorse.isEmpty()) {
+                                    horse -> {
+                                        if (horse == null) {
                                             ctx.sender().sendMessage("This player does not have a horse.");
                                             return;
                                         }
-                                        RokuHorse horse = optionalHorse.get();
                                         horse.name(name.map(Component::text).orElse(null));
                                         horseManager.save(horse);
                                         if (name.isPresent()) {

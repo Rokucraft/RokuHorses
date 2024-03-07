@@ -6,9 +6,9 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Horse;
 import org.jdbi.v3.core.Jdbi;
+import org.jspecify.annotations.Nullable;
 
 import javax.inject.Inject;
-import java.util.Optional;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 
@@ -21,8 +21,7 @@ public class SQLiteHorseRepository implements HorseRepository {
     }
 
 
-
-    public Optional<RokuHorse> getByPlayerIdSync(UUID uuid) {
+    public @Nullable RokuHorse getByPlayerIdSync(UUID uuid) {
         return jdbi.withHandle(handle ->
                 handle.select("""
                                 SELECT owner,
@@ -58,7 +57,7 @@ public class SQLiteHorseRepository implements HorseRepository {
 
                         )
                         .findOne()
-        );
+        ).orElse(null);
     }
 
     public void updateSync(RokuHorse horse) {
@@ -106,7 +105,7 @@ public class SQLiteHorseRepository implements HorseRepository {
     }
 
     @Override
-    public CompletableFuture<Optional<RokuHorse>> getByPlayerId(UUID uuid) {
+    public CompletableFuture<@Nullable RokuHorse> getByPlayerId(UUID uuid) {
         return CompletableFuture.supplyAsync(() -> getByPlayerIdSync(uuid));
     }
 
