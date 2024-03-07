@@ -38,6 +38,7 @@ public class NameCommand implements RokuHorsesCommand {
                                     optionalHorse -> {
                                         if (optionalHorse.isEmpty()) {
                                             ctx.sender().sendMessage("This player does not have a horse.");
+                                            return;
                                         }
                                         RokuHorse horse = optionalHorse.get();
                                         horse.name(name.map(Component::text).orElse(null));

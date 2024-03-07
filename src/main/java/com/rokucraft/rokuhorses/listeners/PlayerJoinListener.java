@@ -11,6 +11,7 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
 import javax.inject.Inject;
+import java.util.Optional;
 
 public class PlayerJoinListener implements Listener {
     private final RokuHorses plugin;
@@ -24,7 +25,9 @@ public class PlayerJoinListener implements Listener {
 
     @EventHandler
     public void onJoin(PlayerJoinEvent e) {
-        manager.horse(e.getPlayer().getUniqueId()).thenAccept(horse -> {
+        manager.horse(e.getPlayer().getUniqueId()).thenAccept(optionalHorse -> {
+            if (optionalHorse.isEmpty()) return;
+            RokuHorse horse = optionalHorse.get();
             Location location = horse.lastKnownLocation();
             if (location != null) {
                 Bukkit.getScheduler().runTask(plugin, () -> horse.spawn(location));
@@ -34,8 +37,9 @@ public class PlayerJoinListener implements Listener {
 
     @EventHandler
     public void onLeave(PlayerQuitEvent e) {
-        RokuHorse horse = manager.horse(e.getPlayer().getUniqueId()).getNow(null);
-        if (horse != null) {
+        Optional<RokuHorse> optionalHorse = manager.horse(e.getPlayer().getUniqueId()).getNow(Optional.empty());
+        if (optionalHorse.isPresent()) {
+            RokuHorse horse = optionalHorse.get();
             manager.save(horse).thenRun(() -> Bukkit.getScheduler().runTask(plugin, horse::despawn));
         }
         manager.unload(e.getPlayer().getUniqueId());

@@ -11,6 +11,7 @@ import org.incendo.cloud.CommandManager;
 import org.incendo.cloud.context.CommandContext;
 
 import javax.inject.Inject;
+import java.util.Optional;
 
 import static net.kyori.adventure.text.Component.text;
 
@@ -37,9 +38,15 @@ public class WhistleCommand implements RokuHorsesCommand {
     }
 
     public void callHorse(Audience sender, Player player) {
-        RokuHorse horse = horseManager.horse(player.getUniqueId()).join();
+        Optional<RokuHorse> optionalHorse = horseManager.horse(player.getUniqueId()).join();
+        if (optionalHorse.isEmpty()) {
+            sender.sendMessage(text(sender == player ? "You do not have a horse!" : "This player does not have a horse!"));
+            return;
+        }
+        RokuHorse horse = optionalHorse.get();
         if (!horse.isSpawned()) {
             sender.sendMessage(text("Your horse can't hear you!", NamedTextColor.RED));
+            return;
         }
         boolean success = horse.walkTo(player);
         if (!success) {

@@ -41,6 +41,7 @@ public class EditCommand implements RokuHorsesCommand {
                                     optionalHorse -> {
                                         if (optionalHorse.isEmpty()) {
                                             ctx.sender().sendMessage("This player does not have a horse.");
+                                            return;
                                         }
                                         RokuHorse horse = optionalHorse.get();
                                         horse.style(style);
@@ -60,6 +61,7 @@ public class EditCommand implements RokuHorsesCommand {
                                     optionalHorse -> {
                                         if (optionalHorse.isEmpty()) {
                                             ctx.sender().sendMessage("This player does not have a horse.");
+                                            return;
                                         }
                                         RokuHorse horse = optionalHorse.get();
                                         horse.color(color);
@@ -79,6 +81,7 @@ public class EditCommand implements RokuHorsesCommand {
                                     optionalHorse -> {
                                         if (optionalHorse.isEmpty()) {
                                             ctx.sender().sendMessage("This player does not have a horse.");
+                                            return;
                                         }
                                         RokuHorse horse = optionalHorse.get();
                                         horse.name(name.map(Component::text).orElse(null));
