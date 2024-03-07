@@ -15,6 +15,7 @@ import org.bukkit.entity.Horse;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.Nullable;
 
 import java.util.EnumSet;
 import java.util.Objects;
@@ -24,14 +25,14 @@ public final class RokuHorse {
     public static final double BASE_SPEED = 0.2;
     public static final double BASE_JUMP_STRENGTH = 0.6;
     private final UUID owner;
-    private Component name;
+    @Nullable private Component name;
     private Horse.Color color;
     private Horse.Style style;
-    private Location lastKnownLocation;
+    @Nullable private Location lastKnownLocation;
 
-    private transient Horse horse;
+    @Nullable private transient Horse horse;
 
-    public RokuHorse(UUID owner, Component name, Horse.Color color, Horse.Style style, Location lastKnownLocation) {
+    public RokuHorse(UUID owner, Component name, Horse.Color color, Horse.Style style, @Nullable Location lastKnownLocation) {
         this.owner = owner;
         this.name = name;
         this.color = color;
@@ -110,7 +111,7 @@ public final class RokuHorse {
         return owner;
     }
 
-    public Component name() {
+    public @Nullable Component name() {
         return name;
     }
 
@@ -122,7 +123,7 @@ public final class RokuHorse {
         return style;
     }
 
-    public Location lastKnownLocation() {
+    public @Nullable Location lastKnownLocation() {
         if (isSpawned()) {
             this.lastKnownLocation = horse.getLocation();
         }
@@ -133,7 +134,7 @@ public final class RokuHorse {
         return horse != null;
     }
 
-    public void name(Component name) {
+    public void name(@Nullable Component name) {
         if (horse != null) {
             horse.customName(name);
             horse.setCustomNameVisible(name != null);

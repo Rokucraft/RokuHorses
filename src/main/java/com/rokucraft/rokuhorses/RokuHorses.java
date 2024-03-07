@@ -9,12 +9,11 @@ import org.incendo.cloud.paper.PaperCommandManager;
 
 public final class RokuHorses extends JavaPlugin {
 
-    private PaperCommandManager<CommandSender> commandManager;
-
     @Override
     public void onEnable() {
+        PaperCommandManager<CommandSender> commandManager;
         try {
-            this.commandManager = PaperCommandManager.createNative(this, ExecutionCoordinator.simpleCoordinator());
+            commandManager = PaperCommandManager.createNative(this, ExecutionCoordinator.simpleCoordinator());
         } catch (Exception e) {
             this.getLogger().severe("Failed to initialize the command manager");
             this.getServer().getPluginManager().disablePlugin(this);
