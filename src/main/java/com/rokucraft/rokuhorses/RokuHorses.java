@@ -2,6 +2,7 @@ package com.rokucraft.rokuhorses;
 
 import com.rokucraft.rokuhorses.di.DaggerRokuHorsesComponent;
 import com.rokucraft.rokuhorses.di.RokuHorsesComponent;
+import com.rokucraft.rokuhorses.integration.Integration;
 import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.incendo.cloud.execution.ExecutionCoordinator;
@@ -25,5 +26,6 @@ public final class RokuHorses extends JavaPlugin {
 
         component.commands().forEach(cmd -> cmd.init(commandManager));
         component.listeners().forEach(listener -> this.getServer().getPluginManager().registerEvents(listener, this));
+        component.integrations().stream().filter(Integration::isRegistrable).forEach(Integration::initialize);
     }
 }

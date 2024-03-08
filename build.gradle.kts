@@ -10,6 +10,7 @@ version = "1.0-SNAPSHOT"
 repositories {
     mavenCentral()
     maven("https://repo.papermc.io/repository/maven-public/")
+    maven("https://maven.enginehub.org/repo/")
 }
 
 dependencies {
@@ -25,6 +26,8 @@ dependencies {
     annotationProcessor("com.google.dagger:dagger-compiler:2.50")
 
     implementation("org.jspecify:jspecify:0.3.0")
+
+    compileOnly("com.sk89q.worldguard:worldguard-bukkit:7.0.8")
 }
 
 bukkit {
@@ -33,6 +36,7 @@ bukkit {
     main = "com.rokucraft.rokuhorses.RokuHorses"
     apiVersion = "1.19"
     author = "Aikovdp"
+    softDepend = listOf("WorldGuard")
 }
 
 java {
