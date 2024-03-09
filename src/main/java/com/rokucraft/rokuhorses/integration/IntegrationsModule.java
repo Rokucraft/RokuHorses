@@ -7,6 +7,7 @@ import dagger.Module;
 import dagger.Provides;
 import dagger.multibindings.ElementsIntoSet;
 import org.bukkit.Bukkit;
+import org.bukkit.plugin.Plugin;
 
 import java.util.Set;
 
@@ -15,7 +16,8 @@ public abstract class IntegrationsModule {
     @Provides
     @ElementsIntoSet
     static Set<Integration> provideWorldGuardIntegration(HorseManager manager, RokuHorses plugin) {
-        if (Bukkit.getPluginManager().getPlugin("WorldGuard") == null) {
+        Plugin worldGuard = Bukkit.getPluginManager().getPlugin("WorldGuard");
+        if (worldGuard == null || !worldGuard.isEnabled()) {
             return Set.of();
         }
         return Set.of(new WorldGuardIntegration(manager, plugin));
