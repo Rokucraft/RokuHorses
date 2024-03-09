@@ -9,7 +9,6 @@ import com.sk89q.worldguard.protection.flags.registry.FlagConflictException;
 import com.sk89q.worldguard.session.Session;
 import com.sk89q.worldguard.session.SessionManager;
 import com.sk89q.worldguard.session.handler.Handler;
-import org.bukkit.Bukkit;
 import org.slf4j.Logger;
 
 import javax.inject.Inject;
@@ -18,6 +17,7 @@ public class WorldGuardIntegration implements Integration {
 
     private final HorseManager horseManager;
     private final Logger logger;
+    private final RokuHorses plugin;
 
     @Inject
     public WorldGuardIntegration(
@@ -25,6 +25,7 @@ public class WorldGuardIntegration implements Integration {
             RokuHorses plugin
     ) {
         this.horseManager = horseManager;
+        this.plugin = plugin;
         this.logger = plugin.getSLF4JLogger();
     }
 
@@ -45,9 +46,10 @@ public class WorldGuardIntegration implements Integration {
                 return new HorseEntryHandler(session, horseManager);
             }
         }, null);
+        plugin.getServer().getPluginManager().registerEvents(new HorseEntryListener(), plugin);
     }
 
     public boolean isRegistrable() {
-        return Bukkit.getPluginManager().getPlugin("WorldGuard") != null;
+        return plugin.getServer().getPluginManager().getPlugin("WorldGuard") != null;
     }
 }
