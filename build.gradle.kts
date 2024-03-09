@@ -1,6 +1,6 @@
 plugins {
     `java-library`
-    id("xyz.jpenilla.run-paper") version "2.0.0"
+    id("xyz.jpenilla.run-paper") version "2.2.3"
     id("net.minecrell.plugin-yml.bukkit") version "0.6.0"
 }
 
@@ -49,5 +49,10 @@ java {
 tasks {
     runServer {
         minecraftVersion("1.19.4")
+
+        downloadPlugins {
+            modrinth("worldedit", "TdNeSMad")
+            url("https://dev.bukkit.org/projects/worldguard/files/4554903/download")
+        }
     }
 }
