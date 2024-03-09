@@ -9,6 +9,7 @@ import dagger.Provides;
 import org.flywaydb.core.Flyway;
 import org.jdbi.v3.core.Jdbi;
 
+import javax.inject.Singleton;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -19,6 +20,7 @@ abstract class DataModule {
     abstract HorseRepository provideHorseRepository(SQLiteHorseRepository repository);
 
     @Provides
+    @Singleton
     static Jdbi provideJdbi(RokuHorses plugin) {
         Path path = plugin.getDataFolder().toPath().resolve("storage.db");
         try {

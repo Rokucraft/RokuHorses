@@ -8,9 +8,11 @@ import dagger.BindsInstance;
 import dagger.Component;
 import org.bukkit.event.Listener;
 
+import javax.inject.Singleton;
 import java.util.Set;
 
 @Component(modules = {DataModule.class, ListenerModule.class, CommandModule.class, IntegrationsModule.class})
+@Singleton
 public interface RokuHorsesComponent {
 
     Set<Listener> listeners();
