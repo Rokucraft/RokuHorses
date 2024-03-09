@@ -1,6 +1,7 @@
 package com.rokucraft.rokuhorses.event;
 
 import com.rokucraft.rokuhorses.horses.RokuHorse;
+import org.bukkit.Location;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
@@ -11,10 +12,11 @@ public class HorseSpawnEvent extends Event implements Cancellable {
     private static final HandlerList HANDLER_LIST = new HandlerList();
     private boolean cancelled;
     private final RokuHorse horse;
+    private final Location location;
 
-    public HorseSpawnEvent(RokuHorse horse) {
-
+    public HorseSpawnEvent(RokuHorse horse, Location location) {
         this.horse = horse;
+        this.location = location;
     }
 
     public static HandlerList getHandlerList() {
@@ -38,5 +40,9 @@ public class HorseSpawnEvent extends Event implements Cancellable {
     @Override
     public void setCancelled(boolean cancel) {
         this.cancelled = cancel;
+    }
+
+    public Location getLocation() {
+        return location;
     }
 }

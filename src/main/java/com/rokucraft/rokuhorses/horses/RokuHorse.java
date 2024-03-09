@@ -40,7 +40,7 @@ public final class RokuHorse {
     }
 
     public void spawn(Location location) {
-        HorseSpawnEvent event = new HorseSpawnEvent(this);
+        HorseSpawnEvent event = new HorseSpawnEvent(this, location);
         event.callEvent();
         if (event.isCancelled()) return;
         if (horse != null) {
