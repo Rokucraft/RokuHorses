@@ -17,9 +17,13 @@ public abstract class IntegrationsModule {
     @ElementsIntoSet
     static Set<Integration> provideWorldGuardIntegration(HorseManager manager, RokuHorses plugin) {
         Plugin worldGuard = Bukkit.getPluginManager().getPlugin("WorldGuard");
-        if (worldGuard == null || !worldGuard.isEnabled()) {
+        if (worldGuard == null) {
             return Set.of();
         }
-        return Set.of(new WorldGuardIntegration(manager, plugin));
+        try {
+            return Set.of(new WorldGuardIntegration(manager, plugin));
+        } catch (NoClassDefFoundError e) {
+            return Set.of();
+        }
     }
 }

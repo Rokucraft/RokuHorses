@@ -18,6 +18,7 @@ public class WorldGuardIntegration implements Integration {
     private final HorseManager horseManager;
     private final Logger logger;
     private final RokuHorses plugin;
+    private boolean shouldInitialize = true;
 
     @Inject
     public WorldGuardIntegration(
@@ -30,15 +31,7 @@ public class WorldGuardIntegration implements Integration {
     }
 
     public void initialize() {
-        for (Flag<?> flag : Flags.values()) {
-            try {
-                WorldGuard.getInstance().getFlagRegistry().register(flag);
-            } catch (FlagConflictException e) {
-                logger.error("Unable to register flag {}", flag.getName(), e);
-                logger.warn("WorldGuard integration will not be initialized.");
-                return;
-            }
-        }
+        if (!shouldInitialize) return;
         SessionManager sessionManager = WorldGuard.getInstance().getPlatform().getSessionManager();
         sessionManager.registerHandler(new Handler.Factory<>() {
             @Override
@@ -47,5 +40,19 @@ public class WorldGuardIntegration implements Integration {
             }
         }, null);
         plugin.getServer().getPluginManager().registerEvents(new HorseEntryListener(), plugin);
+    }
+
+    public void onLoad() {
+        for (Flag<?> flag : Flags.values()) {
+            try {
+                WorldGuard.getInstance().getFlagRegistry().register(flag);
+                logger.info("Registered {} flag", flag.getName());
+            } catch (FlagConflictException e) {
+                logger.error("Unable to register flag {}", flag.getName(), e);
+                logger.warn("WorldGuard integration will not be initialized.");
+                this.shouldInitialize = false;
+                return;
+            }
+        }
     }
 }
