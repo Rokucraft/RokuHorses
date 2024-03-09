@@ -42,6 +42,7 @@ bukkit {
 java {
     toolchain {
         languageVersion = JavaLanguageVersion.of(21)
+        sourceCompatibility = JavaVersion.VERSION_17
     }
 }
 
