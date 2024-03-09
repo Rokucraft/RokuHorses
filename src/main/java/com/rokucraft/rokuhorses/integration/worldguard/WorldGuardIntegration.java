@@ -48,8 +48,4 @@ public class WorldGuardIntegration implements Integration {
         }, null);
         plugin.getServer().getPluginManager().registerEvents(new HorseEntryListener(), plugin);
     }
-
-    public boolean isRegistrable() {
-        return plugin.getServer().getPluginManager().getPlugin("WorldGuard") != null;
-    }
 }

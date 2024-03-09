@@ -26,6 +26,6 @@ public final class RokuHorses extends JavaPlugin {
 
         component.commands().forEach(cmd -> cmd.init(commandManager));
         component.listeners().forEach(listener -> this.getServer().getPluginManager().registerEvents(listener, this));
-        component.integrations().stream().filter(Integration::isRegistrable).forEach(Integration::initialize);
+        component.integrations().forEach(Integration::initialize);
     }
 }
