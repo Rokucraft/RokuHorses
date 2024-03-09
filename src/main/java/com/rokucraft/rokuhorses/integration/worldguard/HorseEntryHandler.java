@@ -1,7 +1,6 @@
 package com.rokucraft.rokuhorses.integration.worldguard;
 
 import com.rokucraft.rokuhorses.horses.HorseManager;
-import com.rokucraft.rokuhorses.horses.RokuHorse;
 import com.sk89q.worldedit.util.Location;
 import com.sk89q.worldguard.LocalPlayer;
 import com.sk89q.worldguard.protection.ApplicableRegionSet;
@@ -27,7 +26,11 @@ public class HorseEntryHandler extends FlagValueChangeHandler<StateFlag.State> {
     protected boolean onSetValue(LocalPlayer player, Location from, Location to, ApplicableRegionSet toSet, StateFlag.State currentValue, StateFlag.State lastValue, MoveType moveType) {
         if (currentValue == StateFlag.State.ALLOW) return true;
 
-        horseManager.horse(player.getUniqueId()).thenAccept(RokuHorse::despawn);
+        horseManager.horse(player.getUniqueId()).thenAccept(horse -> {
+            if (horse != null) {
+                horse.despawn();
+            }
+        });
 
         return true;
     }
