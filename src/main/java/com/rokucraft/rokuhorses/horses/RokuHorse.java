@@ -5,6 +5,7 @@ import com.destroystokyo.paper.entity.ai.Goal;
 import com.destroystokyo.paper.entity.ai.GoalKey;
 import com.destroystokyo.paper.entity.ai.GoalType;
 import com.destroystokyo.paper.entity.ai.MobGoals;
+import com.rokucraft.rokuhorses.event.HorseSpawnEvent;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -44,6 +45,9 @@ public final class RokuHorse {
     }
 
     public void spawn(Location location) {
+        HorseSpawnEvent event = new HorseSpawnEvent(this);
+        event.callEvent();
+        if (event.isCancelled()) return;
         if (horse != null) {
             horse.remove();
         }
