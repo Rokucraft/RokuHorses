@@ -29,19 +29,14 @@ public final class RokuHorse {
     @Nullable private Component name;
     private Horse.Color color;
     private Horse.Style style;
-    @Nullable private Location lastKnownLocation;
 
     @Nullable private transient Horse horse;
 
-    public RokuHorse(UUID owner, Component name, Horse.Color color, Horse.Style style, @Nullable Location lastKnownLocation) {
+    public RokuHorse(UUID owner, Component name, Horse.Color color, Horse.Style style) {
         this.owner = owner;
         this.name = name;
         this.color = color;
         this.style = style;
-        this.lastKnownLocation = lastKnownLocation;
-    }
-    public RokuHorse(UUID owner, Component name, Horse.Color color, Horse.Style style) {
-        this(owner, name, color, style, null);
     }
 
     public void spawn(Location location) {
@@ -125,13 +120,6 @@ public final class RokuHorse {
 
     public Horse.Style style() {
         return style;
-    }
-
-    public @Nullable Location lastKnownLocation() {
-        if (isSpawned()) {
-            this.lastKnownLocation = horse.getLocation();
-        }
-        return lastKnownLocation;
     }
 
     public boolean isSpawned() {

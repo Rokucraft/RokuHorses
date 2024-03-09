@@ -1,12 +1,12 @@
 package com.rokucraft.rokuhorses.horses;
 
-import com.rokucraft.rokuhorses.RokuHorses;
 import com.rokucraft.rokuhorses.horses.db.HorseRepository;
-import org.bukkit.Bukkit;
 import org.jspecify.annotations.Nullable;
 
 import javax.inject.Inject;
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 
 public class HorseManager {
@@ -15,17 +15,8 @@ public class HorseManager {
     private final HorseRepository horseRepository;
 
     @Inject
-    public HorseManager(RokuHorses plugin, HorseRepository horseRepository) {
+    public HorseManager(HorseRepository horseRepository) {
         this.horseRepository = horseRepository;
-        // Save horse data every 30 seconds
-        Bukkit.getScheduler().runTaskTimer(
-                plugin,
-                () -> cache.values().stream()
-                        .map(future -> future.getNow(null))
-                        .filter(Objects::nonNull)
-                        .filter(RokuHorse::isSpawned)
-                        .forEach(this::save),
-                20 * 30, 20 * 30);
     }
 
     public CompletableFuture<@Nullable RokuHorse> horse(UUID uuid) {
