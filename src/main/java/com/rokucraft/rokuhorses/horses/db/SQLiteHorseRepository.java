@@ -1,7 +1,6 @@
 package com.rokucraft.rokuhorses.horses.db;
 
 import com.rokucraft.rokuhorses.horses.RokuHorse;
-import net.kyori.adventure.text.serializer.gson.GsonComponentSerializer;
 import org.bukkit.entity.Horse;
 import org.jdbi.v3.core.Jdbi;
 import org.jspecify.annotations.Nullable;
@@ -9,6 +8,8 @@ import org.jspecify.annotations.Nullable;
 import javax.inject.Inject;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
+
+import static net.kyori.adventure.text.serializer.gson.GsonComponentSerializer.gson;
 
 public class SQLiteHorseRepository implements HorseRepository {
     private final Jdbi jdbi;
@@ -32,7 +33,7 @@ public class SQLiteHorseRepository implements HorseRepository {
                         .bind("uuid", uuid.toString())
                         .map((rs, ctx) -> new RokuHorse(
                                         UUID.fromString(rs.getString("owner")),
-                                        GsonComponentSerializer.gson().deserializeOrNull(rs.getString("name")),
+                                        gson().deserializeOrNull(rs.getString("name")),
                                         Horse.Color.valueOf(rs.getString("color")),
                                         Horse.Style.valueOf(rs.getString("style"))
                                 )
@@ -50,7 +51,7 @@ public class SQLiteHorseRepository implements HorseRepository {
                                   style = :style
                                 WHERE owner = :uuid
                                 """)
-                        .bind("name", GsonComponentSerializer.gson().serializeOrNull(horse.name()))
+                        .bind("name", gson().serializeOrNull(horse.name()))
                         .bind("color", horse.color())
                         .bind("style", horse.style())
                         .bind("uuid", horse.owner())
@@ -68,7 +69,7 @@ public class SQLiteHorseRepository implements HorseRepository {
                                         :style)
                                 """)
                         .bind("uuid", horse.owner())
-                        .bind("name", GsonComponentSerializer.gson().serializeOrNull(horse.name()))
+                        .bind("name", gson().serializeOrNull(horse.name()))
                         .bind("color", horse.color())
                         .bind("style", horse.style())
                         .execute()
