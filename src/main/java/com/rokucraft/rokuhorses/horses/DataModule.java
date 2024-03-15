@@ -1,4 +1,4 @@
-package com.rokucraft.rokuhorses.di;
+package com.rokucraft.rokuhorses.horses;
 
 import com.rokucraft.rokuhorses.RokuHorses;
 import com.rokucraft.rokuhorses.horses.db.HorseRepository;
@@ -15,7 +15,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 
 @Module
-abstract class DataModule {
+public abstract class DataModule {
     @Binds
     abstract HorseRepository provideHorseRepository(SQLiteHorseRepository repository);
 

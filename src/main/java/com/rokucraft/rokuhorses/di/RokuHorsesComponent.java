@@ -1,9 +1,12 @@
 package com.rokucraft.rokuhorses.di;
 
 import com.rokucraft.rokuhorses.RokuHorses;
+import com.rokucraft.rokuhorses.command.CommandModule;
 import com.rokucraft.rokuhorses.command.RokuHorsesCommand;
+import com.rokucraft.rokuhorses.horses.DataModule;
 import com.rokucraft.rokuhorses.integration.Integration;
 import com.rokucraft.rokuhorses.integration.IntegrationsModule;
+import com.rokucraft.rokuhorses.listeners.ListenerModule;
 import dagger.BindsInstance;
 import dagger.Component;
 import org.bukkit.event.Listener;
