@@ -32,7 +32,7 @@ public final class RokuHorse {
 
     @Nullable private transient Horse horse;
 
-    public RokuHorse(UUID owner, Component name, Horse.Color color, Horse.Style style) {
+    public RokuHorse(UUID owner, @Nullable Component name, Horse.Color color, Horse.Style style) {
         this.owner = owner;
         this.name = name;
         this.color = color;

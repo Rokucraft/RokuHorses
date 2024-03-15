@@ -27,4 +27,8 @@ abstract class CommandModule {
     @Binds
     @IntoSet
     abstract RokuHorsesCommand bindWhistleCommand(WhistleCommand command);
+
+    @Binds
+    @IntoSet
+    abstract CreateCommand bindCreateCommand(CreateCommand command);
 }
