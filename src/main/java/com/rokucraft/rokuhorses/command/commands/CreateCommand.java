@@ -5,9 +5,9 @@ import com.rokucraft.rokuhorses.horses.HorseManager;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
-import org.checkerframework.checker.nullness.qual.NonNull;
 import org.incendo.cloud.CommandManager;
 import org.incendo.cloud.context.CommandContext;
+import org.jspecify.annotations.NonNull;
 
 import javax.inject.Inject;
 
@@ -19,7 +19,6 @@ public class CreateCommand implements RokuHorsesCommand {
 
     @Inject
     public CreateCommand(HorseManager horseManager) {
-
         this.horseManager = horseManager;
     }
 
