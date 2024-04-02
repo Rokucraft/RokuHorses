@@ -26,7 +26,7 @@ public class SQLiteHorseRepository implements HorseRepository {
                                 SELECT owner,
                                        name,
                                        color,
-                                       style,
+                                       style
                                 FROM horse
                                 WHERE owner = :uuid
                                 """)
