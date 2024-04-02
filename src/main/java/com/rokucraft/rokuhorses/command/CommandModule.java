@@ -29,5 +29,5 @@ public interface CommandModule {
 
     @Binds
     @IntoSet
-    CreateCommand bindCreateCommand(CreateCommand command);
+    RokuHorsesCommand bindCreateCommand(CreateCommand command);
 }
