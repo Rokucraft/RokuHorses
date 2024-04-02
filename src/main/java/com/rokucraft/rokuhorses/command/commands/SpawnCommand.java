@@ -47,7 +47,7 @@ public class SpawnCommand implements RokuHorsesCommand {
                             Location location = ctx.get("location");
                             RokuHorse horse = horseManager.horse(player.getUniqueId()).join();
                             if (horse == null) {
-                                ctx.sender().sendMessage(text("You do not have a horse!", NamedTextColor.RED));
+                                ctx.sender().sendMessage(text("This player does not have a horse!", NamedTextColor.RED));
                                 return;
                             }
                             horse.spawn(location);

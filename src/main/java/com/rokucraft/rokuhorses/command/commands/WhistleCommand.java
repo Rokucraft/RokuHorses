@@ -39,7 +39,7 @@ public class WhistleCommand implements RokuHorsesCommand {
     public void callHorse(Audience sender, Player player) {
         RokuHorse horse = horseManager.horse(player.getUniqueId()).join();
         if (horse == null) {
-            sender.sendMessage(text(sender == player ? "You do not have a horse!" : "This player does not have a horse!"));
+            sender.sendMessage(text("You do not have a horse!", NamedTextColor.RED));
             return;
         }
         if (!horse.isSpawned()) {
