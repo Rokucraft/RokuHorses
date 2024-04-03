@@ -5,6 +5,7 @@ import org.bukkit.entity.Horse;
 import org.jspecify.annotations.Nullable;
 
 import javax.inject.Inject;
+import javax.inject.Singleton;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
@@ -13,6 +14,7 @@ import java.util.concurrent.CompletableFuture;
 
 import static org.bukkit.entity.Horse.Color.*;
 
+@Singleton
 public class HorseManager {
 
     public static final Horse.Color[] DEFAULT_COLORS = new Horse.Color[]{CREAMY, BROWN, GRAY};
