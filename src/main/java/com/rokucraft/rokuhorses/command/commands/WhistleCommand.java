@@ -43,12 +43,12 @@ public class WhistleCommand implements RokuHorsesCommand {
             return;
         }
         if (!horse.isSpawned()) {
-            sender.sendMessage(text("Your horse can't hear you!", NamedTextColor.RED));
+            horse.spawn(player.getLocation());
             return;
         }
         boolean success = horse.walkTo(player);
         if (!success) {
-            sender.sendMessage(text("Your horse is out of reach", NamedTextColor.RED));
+            horse.spawn(player.getLocation());
         }
     }
 }

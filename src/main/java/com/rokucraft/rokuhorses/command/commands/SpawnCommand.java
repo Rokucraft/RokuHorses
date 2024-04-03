@@ -29,16 +29,6 @@ public class SpawnCommand implements RokuHorsesCommand {
                 .literal("spawn")
                 .permission("rokuhorses.command.spawn");
 
-        manager.command(root.senderType(Player.class).handler(ctx -> {
-            Player player = ctx.sender();
-            RokuHorse horse = horseManager.horse(player.getUniqueId()).join();
-            if (horse == null) {
-                ctx.sender().sendMessage(text("You do not have a horse!", NamedTextColor.RED));
-                return;
-            }
-            horse.spawn(player.getLocation());
-        }));
-
         manager.command(
                 root.required("player", playerParser())
                         .required("location", locationParser())
