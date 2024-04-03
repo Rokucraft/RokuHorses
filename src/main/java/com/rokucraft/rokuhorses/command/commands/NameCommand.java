@@ -48,7 +48,7 @@ public class NameCommand implements RokuHorsesCommand {
                     horse.name(name);
                     horseManager.save(horse);
                     if (name != null) {
-                        player.sendMessage(text("Your horse's name has been changed to " + name, NamedTextColor.GREEN));
+                        player.sendMessage(text("Your horse's name has been changed to ", NamedTextColor.GREEN).append(name));
                     } else {
                         player.sendMessage(text("Your horse's name has been removed", NamedTextColor.GREEN));
                     }
