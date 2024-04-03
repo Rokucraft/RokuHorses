@@ -13,6 +13,7 @@ import javax.inject.Inject;
 import java.util.Optional;
 
 import static net.kyori.adventure.text.Component.text;
+import static net.kyori.adventure.text.minimessage.MiniMessage.miniMessage;
 import static org.incendo.cloud.parser.standard.StringParser.greedyStringParser;
 
 public class NameCommand implements RokuHorsesCommand {
@@ -34,7 +35,7 @@ public class NameCommand implements RokuHorsesCommand {
                         .handler(ctx -> {
                             Optional<String> name = ctx.optional("name");
                             Player player = ctx.sender();
-                            renameHorse(player, name.map(Component::text).orElse(null));
+                            renameHorse(player, name.map(miniMessage()::deserialize).orElse(null));
                         }));
     }
 

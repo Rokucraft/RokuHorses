@@ -2,7 +2,6 @@ package com.rokucraft.rokuhorses.command.commands;
 
 import com.rokucraft.rokuhorses.command.RokuHorsesCommand;
 import com.rokucraft.rokuhorses.horses.HorseManager;
-import net.kyori.adventure.text.Component;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Horse;
@@ -11,6 +10,7 @@ import org.incendo.cloud.CommandManager;
 import javax.inject.Inject;
 import java.util.Optional;
 
+import static net.kyori.adventure.text.minimessage.MiniMessage.miniMessage;
 import static org.incendo.cloud.bukkit.parser.OfflinePlayerParser.offlinePlayerParser;
 import static org.incendo.cloud.parser.standard.EnumParser.enumParser;
 import static org.incendo.cloud.parser.standard.StringParser.greedyStringParser;
@@ -80,7 +80,7 @@ public class EditCommand implements RokuHorsesCommand {
                                             ctx.sender().sendMessage("This player does not have a horse.");
                                             return;
                                         }
-                                        horse.name(name.map(Component::text).orElse(null));
+                                        horse.name(name.map(miniMessage()::deserialize).orElse(null));
                                         horseManager.save(horse);
                                     }
                             );
