@@ -19,7 +19,7 @@ dependencies {
 
     // Loaded through Spigot's library loading
     library("org.flywaydb:flyway-core:10.9.1")
-    library("org.incendo:cloud-paper:2.0.0-beta.3")
+    library("org.incendo:cloud-paper:2.0.0-beta.10")
     library("org.jdbi:jdbi3-core:3.45.0")
 
     library("com.google.dagger:dagger:2.50")
