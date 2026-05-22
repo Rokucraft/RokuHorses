@@ -36,16 +36,12 @@ public class EditCommand implements RokuHorsesCommand {
                         .handler(ctx -> {
                             OfflinePlayer player = ctx.get("player");
                             Horse.Style style = ctx.get("style");
-                            horseManager.horse(player.getUniqueId()).thenAccept(
-                                    horse -> {
-                                        if (horse == null) {
+                            horseManager.update(player.getUniqueId(), h -> h.withStyle(style))
+                                    .thenAccept(updated -> {
+                                        if (updated == null) {
                                             ctx.sender().sendMessage("This player does not have a horse.");
-                                            return;
                                         }
-                                        horse.style(style);
-                                        horseManager.save(horse);
-                                    }
-                            );
+                                    });
                         })
         );
         manager.command(
@@ -55,16 +51,12 @@ public class EditCommand implements RokuHorsesCommand {
                         .handler(ctx -> {
                             OfflinePlayer player = ctx.get("player");
                             Horse.Color color = ctx.get("color");
-                            horseManager.horse(player.getUniqueId()).thenAccept(
-                                    horse -> {
-                                        if (horse == null) {
+                            horseManager.update(player.getUniqueId(), h -> h.withColor(color))
+                                    .thenAccept(updated -> {
+                                        if (updated == null) {
                                             ctx.sender().sendMessage("This player does not have a horse.");
-                                            return;
                                         }
-                                        horse.color(color);
-                                        horseManager.save(horse);
-                                    }
-                            );
+                                    });
                         })
         );
         manager.command(
@@ -74,16 +66,14 @@ public class EditCommand implements RokuHorsesCommand {
                         .handler(ctx -> {
                             OfflinePlayer player = ctx.get("player");
                             Optional<String> name = ctx.optional("name");
-                            horseManager.horse(player.getUniqueId()).thenAccept(
-                                    horse -> {
-                                        if (horse == null) {
-                                            ctx.sender().sendMessage("This player does not have a horse.");
-                                            return;
-                                        }
-                                        horse.name(name.map(miniMessage()::deserialize).orElse(null));
-                                        horseManager.save(horse);
-                                    }
-                            );
+                            horseManager.update(
+                                    player.getUniqueId(),
+                                    h -> h.withName(name.map(miniMessage()::deserialize).orElse(null))
+                            ).thenAccept(updated -> {
+                                if (updated == null) {
+                                    ctx.sender().sendMessage("This player does not have a horse.");
+                                }
+                            });
                         })
         );
     }

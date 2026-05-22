@@ -40,14 +40,12 @@ public class NameCommand implements RokuHorsesCommand {
     }
 
     private void renameHorse(Player player, @Nullable Component name) {
-        horseManager.horse(player.getUniqueId())
-                .thenAccept(horse -> {
-                    if (horse == null) {
+        horseManager.update(player.getUniqueId(), h -> h.withName(name))
+                .thenAccept(updated -> {
+                    if (updated == null) {
                         player.sendMessage(text("You do not have a horse.", NamedTextColor.RED));
                         return;
                     }
-                    horse.name(name);
-                    horseManager.save(horse);
                     if (name != null) {
                         player.sendMessage(text("Your horse's name has been changed to ", NamedTextColor.GREEN).append(name));
                     } else {

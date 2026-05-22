@@ -25,13 +25,7 @@ public class HorseEntryHandler extends FlagValueChangeHandler<StateFlag.State> {
     @Override
     protected boolean onSetValue(LocalPlayer player, Location from, Location to, ApplicableRegionSet toSet, StateFlag.State currentValue, StateFlag.State lastValue, MoveType moveType) {
         if (currentValue == StateFlag.State.ALLOW) return true;
-
-        horseManager.horse(player.getUniqueId()).thenAccept(horse -> {
-            if (horse != null) {
-                horse.despawn();
-            }
-        });
-
+        horseManager.despawn(player.getUniqueId());
         return true;
     }
 

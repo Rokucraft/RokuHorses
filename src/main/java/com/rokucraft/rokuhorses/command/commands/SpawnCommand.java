@@ -40,7 +40,7 @@ public class SpawnCommand implements RokuHorsesCommand {
                                 ctx.sender().sendMessage(text("This player does not have a horse!", NamedTextColor.RED));
                                 return;
                             }
-                            horse.spawn(location);
+                            horseManager.spawn(horse, location);
                         })
         );
     }
