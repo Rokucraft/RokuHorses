@@ -3,6 +3,7 @@ package com.rokucraft.rokuhorses.command.commands;
 import com.rokucraft.rokuhorses.command.RokuHorsesCommand;
 import com.rokucraft.rokuhorses.horses.HorseManager;
 import com.rokucraft.rokuhorses.horses.RokuHorse;
+import com.rokucraft.rokuhorses.horses.SpawnedHorse;
 import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.command.CommandSender;
@@ -11,6 +12,7 @@ import org.incendo.cloud.CommandManager;
 import org.incendo.cloud.context.CommandContext;
 
 import javax.inject.Inject;
+import java.util.UUID;
 
 import static net.kyori.adventure.text.Component.text;
 
@@ -37,18 +39,19 @@ public class WhistleCommand implements RokuHorsesCommand {
     }
 
     public void callHorse(Audience sender, Player player) {
-        RokuHorse horse = horseManager.horse(player.getUniqueId()).join();
+        UUID uuid = player.getUniqueId();
+        RokuHorse horse = horseManager.horse(uuid).join();
         if (horse == null) {
             sender.sendMessage(text("You do not have a horse!", NamedTextColor.RED));
             return;
         }
-        if (!horse.isSpawned()) {
-            horse.spawn(player.getLocation());
+        SpawnedHorse spawned = horseManager.spawned(uuid);
+        if (spawned == null) {
+            horseManager.spawn(horse, player.getLocation());
             return;
         }
-        boolean success = horse.walkTo(player);
-        if (!success) {
-            horse.spawn(player.getLocation());
+        if (!spawned.walkTo(player)) {
+            horseManager.spawn(horse, player.getLocation());
         }
     }
 }

@@ -2,7 +2,6 @@ package com.rokucraft.rokuhorses.command.commands;
 
 import com.rokucraft.rokuhorses.command.RokuHorsesCommand;
 import com.rokucraft.rokuhorses.horses.HorseManager;
-import com.rokucraft.rokuhorses.horses.RokuHorse;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.incendo.cloud.Command;
@@ -28,12 +27,7 @@ public class DespawnCommand implements RokuHorsesCommand {
         manager.command(
                 root.senderType(Player.class)
                         .permission("rokuhorses.command.despawn.self")
-                        .handler(ctx -> {
-                            Player player = ctx.sender();
-                            RokuHorse horse = horseManager.horse(player.getUniqueId()).getNow(null);
-                            if (horse == null) return;
-                            horse.despawn();
-                        })
+                        .handler(ctx -> horseManager.despawn(ctx.sender().getUniqueId()))
         );
 
         manager.command(
@@ -42,9 +36,7 @@ public class DespawnCommand implements RokuHorsesCommand {
                         .permission("rokuhorses.command.despawn.others")
                         .handler(ctx -> {
                             Player player = ctx.get("player");
-                            RokuHorse horse = horseManager.horse(player.getUniqueId()).getNow(null);
-                            if (horse == null) return;
-                            horse.despawn();
+                            horseManager.despawn(player.getUniqueId());
                         })
         );
     }
