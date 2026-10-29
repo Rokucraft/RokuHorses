@@ -18,14 +18,14 @@ dependencies {
     compileOnly("org.xerial:sqlite-jdbc:3.45.1.0")
 
     // Loaded through Spigot's library loading
-    library("org.flywaydb:flyway-core:10.9.1")
-    library("org.incendo:cloud-paper:2.0.0-beta.10")
-    library("org.jdbi:jdbi3-core:3.45.0")
+    library("org.flywaydb:flyway-core:13.11.1")
+    library("org.incendo:cloud-paper:2.0.1")
+    library("org.jdbi:jdbi3-core:3.55.0")
 
-    library("com.google.dagger:dagger:2.50")
-    annotationProcessor("com.google.dagger:dagger-compiler:2.50")
+    library("com.google.dagger:dagger:2.60.1")
+    annotationProcessor("com.google.dagger:dagger-compiler:2.60.1")
 
-    implementation("org.jspecify:jspecify:0.3.0")
+    implementation("org.jspecify:jspecify:1.0.1")
 
     compileOnly("com.sk89q.worldguard:worldguard-bukkit:7.0.8")
 }
@@ -51,7 +51,7 @@ tasks {
         minecraftVersion("1.19.4")
 
         downloadPlugins {
-            modrinth("worldedit", "TdNeSMad")
+            modrinth("worldedit", "DfjpjdP5")
             url("https://dev.bukkit.org/projects/worldguard/files/4554903/download")
         }
     }
